@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alexis Belmer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0a0a0a;
+      --accent: #ff4444;
+      --text: #2a2a2a;
+      --text-light: #6a6a6a;
+      --border: #e0e0e0;
+      --bg: #fafafa;
+      --card: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .55;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(250, 250, 250, .9);
+      backdrop-filter: blur(14px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: .95rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      position: relative;
+      transition: color .3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width .3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      margin-top: 80px;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      padding: 3rem;
+    }
+
+    .hero-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      letter-spacing: -.03em;
+    }
+
+    .hero-content h1 .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: wordReveal .7s cubic-bezier(.16, 1, .3, 1) forwards;
+    }
+
+    .hero-content h1 .word:nth-child(1) {
+      animation-delay: .1s;
+    }
+
+    .hero-content h1 .word:nth-child(2) {
+      animation-delay: .25s;
+    }
+
+    @keyframes wordReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      color: var(--text-light);
+      margin-bottom: 3rem;
+      font-weight: 300;
+      line-height: 1.8;
+      min-height: 2.6em;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp .8s ease .5s forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tw-cursor {
+      display: inline-block;
+      color: var(--accent);
+      animation: blink .75s step-end infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp .8s ease .7s forwards;
+    }
+
+    .stat-item {
+      border-left: 2px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: .85rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .hero-info {
+      background: var(--card);
+      padding: 3rem;
+      border: 1px solid var(--border);
+      opacity: 0;
+      animation: slideInRight .9s cubic-bezier(.16, 1, .3, 1) .4s forwards;
+      transition: box-shadow .4s;
+    }
+
+    .hero-info:hover {
+      box-shadow: -8px 8px 40px rgba(0, 0, 0, .08);
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .info-value a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2.5rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      font-size: .9rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-weight: 500;
+      border: 2px solid var(--primary);
+      transition: all .3s;
+    }
+
+    .cta-button:hover {
+      background: transparent;
+      color: var(--primary);
+    }
+
+    section {
+      padding: 8rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 4rem;
+    }
+
+    .section-number {
+      font-size: .9rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: -.02em;
+      line-height: 1.2;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.9;
+    }
+
+    .about-text p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-category {
+      background: var(--card);
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-category::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width .4s;
+    }
+
+    .skill-category:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .09);
+      border-color: rgba(255, 68, 68, .3);
+    }
+
+    .skill-category:hover::before {
+      width: 100%;
+    }
+
+    .skill-category h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .skill-category ul {
+      list-style: none;
+    }
+
+    .skill-category li {
+      padding: .7rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .95rem;
+      transition: color .2s, padding-left .2s;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .skill-category li::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width .25s;
+      margin-left: auto;
+    }
+
+    .skill-category li:last-child {
+      border-bottom: none;
+    }
+
+    .skill-category li:hover {
+      color: var(--accent);
+      padding-left: 4px;
+    }
+
+    .skill-category li:hover::after {
+      width: 16px;
+    }
+
+    .skill-hint {
+      display: block;
+      font-size: .72rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: .5rem;
+    }
+
+    /* MODALE */
+    #modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, .75);
+      backdrop-filter: blur(6px);
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s;
+    }
+
+    #modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #modal-box {
+      background: var(--card);
+      width: min(780px, 92vw);
+      max-height: 88vh;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      position: relative;
+      transform: translateY(30px) scale(.97);
+      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    #modal-overlay.open #modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    #modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: 1px solid var(--border);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      z-index: 1;
+    }
+
+    #modal-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    #modal-header {
+      padding: 2.5rem 2.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #modal-skill-label {
+      font-size: .8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+
+    #modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    #modal-counter {
+      font-size: .85rem;
+      color: var(--text-light);
+      margin-top: .4rem;
+    }
+
+    #modal-body {
+      padding: 2.5rem;
+    }
+
+    .modal-project {
+      display: none;
+    }
+
+    .modal-project.active {
+      display: block;
+    }
+
+    .modal-project-date {
+      font-size: .8rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: .8rem;
+    }
+
+    .modal-project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .modal-project-desc {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .modal-project-desc p {
+      margin-bottom: .8rem;
+    }
+
+    .modal-project-desc ul {
+      margin-left: 1.5rem;
+      margin-top: .5rem;
+    }
+
+    .modal-project-desc li {
+      margin-bottom: .5rem;
+      color: var(--text-light);
+    }
+
+    .modal-project-desc strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: 1rem;
+    }
+
+    .modal-tag {
+      padding: .35rem .9rem;
+      background: rgba(255, 68, 68, .06);
+      border: 1px solid rgba(255, 68, 68, .3);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    #modal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .modal-btn {
+      background: none;
+      border: 1px solid var(--border);
+      padding: .7rem 1.4rem;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      transition: all .25s;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 500;
+    }
+
+    .modal-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .modal-btn:disabled {
+      opacity: .25;
+      pointer-events: none;
+    }
+
+    #modal-dots {
+      display: flex;
+      gap: .5rem;
+    }
+
+    .modal-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background .2s, transform .2s;
+    }
+
+    .modal-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+
+    #modal-empty {
+      padding: 3rem 2.5rem;
+      text-align: center;
+      color: var(--text-light);
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      gap: 4rem;
+    }
+
+    .project-card {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
+      padding: 3rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      transition: all .4s cubic-bezier(.16, 1, .3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      transition: height .4s;
+    }
+
+    .project-card:hover::after {
+      height: 100%;
+    }
+
+    .project-card:hover {
+      transform: translateX(12px);
+      box-shadow: -20px 20px 50px rgba(0, 0, 0, .08);
+    }
+
+    .project-card.featured {
+      border-color: var(--accent);
+      border-width: 2px;
+    }
+
+    .project-card.featured::after {
+      display: none;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-date {
+      font-size: .85rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 1rem;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: auto;
+    }
+
+    .tag {
+      padding: .4rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      font-weight: 500;
+      transition: all .2s;
+    }
+
+    .tag:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .project-card.featured .tag {
+      background: rgba(255, 68, 68, .05);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .project-description {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .project-description p {
+      margin-bottom: 1rem;
+    }
+
+    .project-description ul {
+      margin-left: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .project-description li {
+      margin-bottom: .7rem;
+      color: var(--text-light);
+    }
+
+
+    .project-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .5rem 1.2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .25s;
+    }
+    .project-link:hover {
+      background: var(--accent);
+      color: white;
+    }
+    .project-link + .project-link {
+      margin-left: .6rem;
+    }
+    .project-description strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 2rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity .6s, transform .6s;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -3.5rem;
+      top: .5rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+      transition: transform .3s;
+    }
+
+    .timeline-item:hover::before {
+      transform: scale(1.5);
+    }
+
+    .timeline-year {
+      font-size: .85rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: .5rem;
+      font-weight: 600;
+    }
+
+    .timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: .5rem;
+    }
+
+    .timeline-description {
+      color: var(--text-light);
+      font-size: .95rem;
+    }
+
+    /* CONTACT */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 6rem;
+    }
+
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+    }
+
+    .contact-info p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: .8rem;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      font-family: 'Work Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255, 68, 68, .08);
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: var(--primary);
+      color: white;
+      border: 2px solid var(--primary);
+      font-size: .9rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-weight: 500;
+      transition: all .3s;
+    }
+
+    .submit-btn:hover {
+      background: transparent;
+      color: var(--primary);
+    }
+
+    footer {
+      background: var(--primary);
+      color: white;
+      padding: 4rem 3rem;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: .9rem;
+      color: rgba(255, 255, 255, .6);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s, transform .7s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media(max-width:1024px) {
+
+      .hero-container,
+      .about-content,
+      .project-card,
+      .contact-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      section {
+        padding: 5rem 2rem;
+      }
+    }
+
+    @media(max-width:768px) {
+      nav .container {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 2rem 1.5rem;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 9999;
+      width: 0;
+      transition: width .1s;
+    }
+
+    /* LANG SWITCHER */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-left: 2rem;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid var(--border);
+      padding: .3rem .7rem;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 500;
+      color: var(--text-light);
+      transition: all .2s;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .lang-btn:hover:not(.active) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* BLOCS NATIONAUX */
+    .blocs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .bloc-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+    }
+
+    .bloc-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--accent);
+      transition: width .4s;
+    }
+
+    .bloc-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .09);
+      border-color: rgba(255, 68, 68, .3);
+    }
+
+    .bloc-card:hover::before {
+      width: 100%;
+    }
+
+    .bloc-number {
+      font-size: .78rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-weight: 600;
+      margin-bottom: .8rem;
+    }
+
+    .bloc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.35;
+      margin-bottom: 1rem;
+    }
+
+    .bloc-subtitle {
+      font-size: .88rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .bloc-arrow {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      color: var(--text-light);
+      transition: all .25s;
+      pointer-events: none;
+    }
+
+    .bloc-card:hover .bloc-arrow {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .bloc-card * {
+      pointer-events: none;
+    }
+
+    /* BLOC NATIONAL MODAL */
+    #bloc-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, .78);
+      backdrop-filter: blur(7px);
+      z-index: 6000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s;
+    }
+
+    #bloc-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #bloc-modal-box {
+      background: var(--card);
+      width: min(820px, 94vw);
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      position: relative;
+      transform: translateY(30px) scale(.97);
+      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    #bloc-modal-overlay.open #bloc-modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    #bloc-modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: 1px solid var(--border);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      z-index: 1;
+    }
+
+    #bloc-modal-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .bm-header {
+      padding: 2.5rem 2.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bm-num {
+      font-size: .78rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-weight: 600;
+      margin-bottom: .4rem;
+    }
+
+    .bm-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+
+    .bm-niveau {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: .8rem;
+      padding: .35rem .9rem;
+      background: rgba(255, 68, 68, .06);
+      border: 1px solid rgba(255, 68, 68, .3);
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .bm-niveau::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .bm-body {
+      padding: 2.5rem;
+    }
+
+    .bm-section {
+      margin-bottom: 2rem;
+    }
+
+    .bm-section-label {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: .8rem;
+      padding-bottom: .4rem;
+      border-bottom: 1px solid rgba(255, 68, 68, .2);
+    }
+
+    .bm-section p {
+      font-size: .98rem;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: .7rem;
+    }
+
+    .bm-section ul {
+      margin-left: 1.4rem;
+    }
+
+    .bm-section li {
+      font-size: .95rem;
+      line-height: 1.75;
+      color: var(--text-light);
+      margin-bottom: .4rem;
+    }
+
+    .bm-section li strong {
+      color: var(--primary);
+    }
+
+    .bm-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .5rem;
+    }
+
+    .bm-tag {
+      padding: .3rem .8rem;
+      background: rgba(255, 68, 68, .06);
+      border: 1px solid rgba(255, 68, 68, .28);
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .bm-gap {
+      background: rgba(255, 68, 68, .04);
+      border-left: 3px solid var(--accent);
+      padding: .8rem 1.1rem;
+      font-size: .9rem;
+      color: var(--text-light);
+      margin-top: .5rem;
+      line-height: 1.7;
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+  <div id="progress-bar"></div>
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- MODALE -->
+  <div id="modal-overlay">
+    <div id="modal-box">
+      <button id="modal-close">&#x2715;</button>
+      <div id="modal-header">
+        <div id="modal-skill-label"></div>
+        <div id="modal-title"></div>
+        <div id="modal-counter"></div>
+      </div>
+      <div id="modal-body">
+        <div id="modal-empty" style="display:none" data-fr="Aucun projet associé à cette compétence." data-en="No project linked to this skill.">Aucun projet associé à cette compétence.</div>
+      </div>
+      <div id="modal-nav">
+        <button class="modal-btn" id="modal-prev" data-fr="&#8592; Précédent" data-en="&#8592; Previous">&#8592; Précédent</button>
+        <div id="modal-dots"></div>
+        <button class="modal-btn" id="modal-next" data-fr="Suivant &#8594;" data-en="Next &#8594;">Suivant &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOC NATIONAL MODAL -->
+  <div id="bloc-modal-overlay">
+    <div id="bloc-modal-box">
+      <button id="bloc-modal-close">&#x2715;</button>
+      <div class="bm-header">
+        <div class="bm-num" id="bm-num"></div>
+        <div class="bm-title" id="bm-title"></div>
+        <div class="bm-niveau" id="bm-niveau"></div>
+      </div>
+      <div class="bm-body" id="bm-body"></div>
+    </div>
+  </div>
+
+  </div>
+
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">AB</a>
+      <div style="display:flex;align-items:center;">
+        <ul class="nav-links">
+          <li><a href="#about" data-fr="À propos" data-en="About">À propos</a></li>
+          <li><a href="#skills" data-fr="Compétences" data-en="Skills">Compétences</a></li>
+          <li><a href="#blocs-nationaux" data-fr="Blocs BUT" data-en="BUT Blocs">Blocs BUT</a></li>
+          <li><a href="#projects" data-fr="Projets" data-en="Projects">Projets</a></li>
+          <li><a href="#formation" data-fr="Formation" data-en="Education">Formation</a></li>
+          <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+        </ul>
+        <div class="lang-switcher"><button class="lang-btn active" onclick="setLang('fr')">FR</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1><span class="word">Alexis</span> <span class="word">Belmer</span></h1>
+        <p class="subtitle"><span id="typewriter"></span><span class="tw-cursor">|</span></p>
+        <div class="hero-stats">
+          <div class="stat-item"><span class="stat-number counter" data-target="5">0</span><span class="stat-label" data-fr="Ans en autodidacte" data-en="Years self-taught">Ans en autodidacte</span></div>
+          <div class="stat-item"><span class="stat-number counter" data-target="8">0</span><span class="stat-label" data-fr="Projets concrets" data-en="Shipped projects">Projets concrets</span></div>
+          <div class="stat-item"><span class="stat-number" style="font-size:1.1rem;letter-spacing:-.02em;">Python · Java · C</span><span class="stat-label" data-fr="Langages de prédilection" data-en="Core languages">Langages de prédilection</span></div>
+        </div>
+      </div>
+      <div class="hero-info">
+        <div class="info-item"><span class="info-label" data-fr="Email" data-en="Email">Email</span><span class="info-value"><a href="/cdn-cgi/l/email-protection#7e1f121b06170d50141c501c1b12131b0c3e19131f1712501d1113"><span class="__cf_email__" data-cfemail="36575a534e5f45185c541854535a5b534476515b575f5a1855595b">alexis.jb.belmer@gmail.com</span></a></span></div>
+        <div class="info-item"><span class="info-label" data-fr="Téléphone" data-en="Phone">Téléphone</span><span class="info-value">+33 06 63 55 82 14</span></div>
+        <div class="info-item"><span class="info-label" data-fr="Localisation" data-en="Location">Localisation</span><span class="info-value">Le Raincy, France</span></div>
+        <div class="info-item"><span class="info-label">GitHub</span><span class="info-value"><a href="https://github.com/ChuFeng-debug" target="_blank">ChuFeng-debug</a></span></div>
+        <a href="CV-1.pdf" class="cta-button" target="_blank" data-fr="Télécharger CV" data-en="Download CV">Télécharger CV</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-header reveal">
+      <div class="section-number"><span data-fr="01 / À propos" data-en="01 / About">01 / À propos</span></div>
+      <h2 class="section-title" data-fr="Qui suis-je ?" data-en="Who am I?">Qui suis-je ?</h2>
+    </div>
+    <div class="about-content reveal">
+      <div class="about-text">
+        <p data-fr="Je n'ai pas attendu l'université pour apprendre. Depuis l'âge de 15 ans, je me forme en autodidacte : OpenClassroom, cybersécurité, projets perso, parce que la curiosité ne s'arrête pas à la sonnerie. Aujourd'hui en BUT 2 Informatique, je combine ce bagage personnel avec une formation solide en développement, bases de données et systèmes." data-en="I didn't wait for university to start learning. Since age 15, I've been self-taught: OpenClassroom, cybersecurity, personal projects  because curiosity doesn't stop at the bell. Now in my 2nd year of a Computer Science degree, I combine that personal background with solid training in development, databases and systems.">Je n'ai pas attendu l'université pour apprendre. Depuis l'âge de 15 ans, je me forme en autodidacte : OpenClassroom, cybersécurité, projets perso, parce que la curiosité ne s'arrête pas à la sonnerie. Aujourd'hui en BUT 2 Informatique, je combine ce bagage personnel avec une formation solide en développement, bases de données et systèmes.</p>
+        <p data-fr="Du Python au montage electronique, du web a l'IoT, je construis des choses qui fonctionnent. Ce qui m'attire vraiment, c'est comprendre comment les systèmes se cassent : la cybersécurité n'est pas un hobby, c'est une facon de penser." data-en="From Python to electronics, from web to IoT, I build things that work. What really drives me is understanding how systems break: cybersecurity isn't a hobby, it's a way of thinking.">Du Python au montage electronique, du web a l'IoT, je construis des choses qui fonctionnent. Ce qui m'attire vraiment, c'est comprendre comment les systèmes se cassent : la cybersécurité n'est pas un hobby, c'est une facon de penser.</p>
+      </div>
+      <div class="about-text">
+        <p data-fr="Je préfère poser les bonnes questions plutot que d'aller vite. Et quand je ne sais pas, je cherche, jusqu'à ce que ca marche." data-en="I prefer asking the right questions over going fast. And when I don't know, I search  until it works.">Je préfère poser les bonnes questions plutot que d'aller vite. Et quand je ne sais pas, je cherche, jusqu'à ce que ca marche.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-header reveal">
+      <div class="section-number"><span data-fr="02 / Compétences" data-en="02 / Skills">02 / Compétences</span></div>
+      <h2 class="section-title" data-fr="Expertise technique" data-en="Technical Expertise">Expertise technique</h2>
+    </div>
+    <span class="skill-hint" style="display:block;margin-bottom:2rem;"><span data-fr="Cliquez sur une compétence ou une categorie pour voir les projets associes" data-en="Click on a skill or category to see related projects">Cliquez sur une compétence ou une categorie pour voir les projets associes</span></span>
+    <div class="skills-grid">
+      <div class="skill-category reveal" data-skill="Langages">
+        <h3 data-fr="Langages" data-en="Languages">Langages</h3>
+        <ul>
+          <li data-skill="Python">Python</li>
+          <li data-skill="Java">Java</li>
+          <li data-skill="C">C/C++</li>
+          <li data-skill="PHP">PHP</li>
+          <li data-skill="SQL">SQL</li>
+          <li data-skill="HTML/CSS">HTML/CSS</li>
+          <li data-skill="JavaScript">JavaScript</li>
+        </ul>
+      </div>
+      <div class="skill-category reveal" data-skill="Outils">
+        <h3 data-fr="Outils &amp; Technologies" data-en="Tools &amp; Technologies">Outils &amp; Technologies</h3>
+        <ul>
+          <li data-skill="Git">Git &amp; GitHub</li>
+          <li data-skill="Node-RED">Node-RED</li>
+          <li data-skill="MySQL">MySQL/PostgreSQL</li>
+          <li data-skill="Apache">Apache</li>
+          <li data-skill="VSCode">VSCode</li>
+          <li data-skill="Eclipse">Eclipse</li>
+        </ul>
+      </div>
+      <div class="skill-category reveal" data-skill="Domaines">
+        <h3 data-fr="Domaines" data-en="Fields">Domaines</h3>
+        <ul>
+          <li data-skill="Full-Stack" data-fr="Développement Web Full-Stack" data-en="Full-Stack Web Development">Développement Web Full-Stack</li>
+          <li data-skill="Bases de données" data-fr="Bases de données" data-en="Databases">Bases de données</li>
+          <li data-skill="Cybersécurité" data-fr="Cybersécurité" data-en="Cybersecurity">Cybersécurité</li>
+          <li data-skill="IoT" data-fr="IoT &amp; Domotique" data-en="IoT &amp; Home Automation">IoT &amp; Domotique</li>
+          <li data-skill="Traitement d'images" data-fr="Traitement d'images" data-en="Image Processing">Traitement d'images</li>
+          <li data-skill="Gestion de projet" data-fr="Gestion de projets" data-en="Project Management">Gestion de projets</li>
+        </ul>
+      </div>
+      <div class="skill-category reveal" data-skill="BUT Informatique">
+        <h3>BUT Informatique 2&egrave;me ann&eacute;e</h3>
+        <ul>
+          <li data-skill="Conception logicielle" data-fr="Conception logicielle (UML)" data-en="Software Design (UML)">Conception logicielle (UML)</li>
+          <li data-skill="Développement avance" data-fr="D&eacute;veloppement avanc&eacute; (Java, C, Python)" data-en="Advanced Development (Java, C, Python)">D&eacute;veloppement avanc&eacute; (Java, C, Python)</li>
+          <li data-skill="Réseaux" data-fr="R&eacute;seaux &amp; protocoles" data-en="Networks &amp; protocols">R&eacute;seaux &amp; protocoles</li>
+          <li data-skill="Systèmes" data-fr="Syst&egrave;mes d'exploitation (Linux)" data-en="Operating Systems (Linux)">Syst&egrave;mes d'exploitation (Linux)</li>
+          <li data-skill="Qualite logicielle" data-fr="Qualit&eacute; &amp; tests logiciels" data-en="Software Quality &amp; Testing">Qualit&eacute; &amp; tests logiciels</li>
+          <li data-skill="SAE" data-fr="SAE &mdash; projets transversaux" data-en="SAE &mdash; cross-disciplinary projects">SAE &mdash; projets transversaux</li>
+        </ul>
+      </div>
+      <div class="skill-category reveal" data-skill="Langues">
+        <h3 data-fr="Langues" data-en="Spoken Languages">Langues</h3>
+        <ul>
+          <li data-skill="Français" data-fr="Français : Natif" data-en="French : Native">Français : Natif</li>
+          <li data-skill="Anglais" data-fr="Anglais : B2" data-en="English : B2">Anglais : B2</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="blocs-nationaux">
+    <div class="section-header reveal">
+      <div class="section-number"><span data-fr="02b / Blocs Nationaux BUT" data-en="02b / National BUT Competency Blocs">02b / Blocs Nationaux BUT</span></div>
+      <h2 class="section-title" data-fr="Blocs de comp&eacute;tences" data-en="Competency Blocs">Blocs de comp&eacute;tences</h2>
+    </div>
+    <span class="skill-hint" style="display:block;margin-bottom:2rem;"><span data-fr="Cliquez sur un bloc pour voir la description et l'argumentation" data-en="Click a bloc to see description and argumentation">Cliquez sur un bloc pour voir la description et l'argumentation</span></span>
+    <div class="blocs-grid">
+
+      <div class="bloc-card reveal" data-bloc="1" onclick="openBlocModal(1)" role="button" tabindex="0">
+        <div class="bloc-number">Bloc 01</div>
+        <div class="bloc-title" data-fr="R&eacute;aliser un d&eacute;veloppement d'application" data-en="Develop an application">R&eacute;aliser un d&eacute;veloppement d'application</div>
+        <div class="bloc-subtitle" data-fr="Conception, d&eacute;veloppement, tests" data-en="Design, development, testing">Conception, d&eacute;veloppement, tests</div>
+        <div class="bloc-arrow">&#8599;</div>
+      </div>
+
+      <div class="bloc-card reveal" data-bloc="2" onclick="openBlocModal(2)" role="button" tabindex="0">
+        <div class="bloc-number">Bloc 02</div>
+        <div class="bloc-title" data-fr="Optimiser des applications informatiques" data-en="Optimise software applications">Optimiser des applications informatiques</div>
+        <div class="bloc-subtitle" data-fr="Performance, qualit&eacute;, maintenance" data-en="Performance, quality, maintenance">Performance, qualit&eacute;, maintenance</div>
+        <div class="bloc-arrow">&#8599;</div>
+      </div>
+
+      <div class="bloc-card reveal" data-bloc="3" onclick="openBlocModal(3)" role="button" tabindex="0">
+        <div class="bloc-number">Bloc 03</div>
+        <div class="bloc-title" data-fr="Administrer des syst&egrave;mes informatiques communicants complexes" data-en="Administer complex communicating IT systems">Administrer des syst&egrave;mes informatiques communicants complexes</div>
+        <div class="bloc-subtitle" data-fr="Syst&egrave;mes, r&eacute;seaux, s&eacute;curit&eacute;" data-en="Systems, networks, security">Syst&egrave;mes, r&eacute;seaux, s&eacute;curit&eacute;</div>
+        <div class="bloc-arrow">&#8599;</div>
+      </div>
+
+      <div class="bloc-card reveal" data-bloc="4" onclick="openBlocModal(4)" role="button" tabindex="0">
+        <div class="bloc-number">Bloc 04</div>
+        <div class="bloc-title" data-fr="G&eacute;rer des donn&eacute;es de l'information" data-en="Manage information data">G&eacute;rer des donn&eacute;es de l'information</div>
+        <div class="bloc-subtitle" data-fr="Mod&eacute;lisation, BDD, requ&ecirc;tes, exploitation" data-en="Modelling, databases, queries, exploitation">Mod&eacute;lisation, BDD, requ&ecirc;tes, exploitation</div>
+        <div class="bloc-arrow">&#8599;</div>
+      </div>
+
+      <div class="bloc-card reveal" data-bloc="5" onclick="openBlocModal(5)" role="button" tabindex="0">
+        <div class="bloc-number">Bloc 05</div>
+        <div class="bloc-title" data-fr="Conduire un projet" data-en="Lead a project">Conduire un projet</div>
+        <div class="bloc-subtitle" data-fr="Gestion de projet, &eacute;quipe, m&eacute;thodes, communication" data-en="Project management, teamwork, methods, communication">Gestion de projet, &eacute;quipe, m&eacute;thodes, communication</div>
+        <div class="bloc-arrow">&#8599;</div>
+      </div>
+
+      <div class="bloc-card reveal" data-bloc="6" onclick="openBlocModal(6)" role="button" tabindex="0">
+        <div class="bloc-number">Bloc 06</div>
+        <div class="bloc-title" data-fr="Construire son parcours professionnel" data-en="Build your professional path">Construire son parcours professionnel</div>
+        <div class="bloc-subtitle" data-fr="PPP, insertion, soft skills" data-en="Personal project, integration, soft skills">PPP, insertion, soft skills</div>
+        <div class="bloc-arrow">&#8599;</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-header reveal">
+      <div class="section-number"><span data-fr="03 / Projets" data-en="03 / Projects">03 / Projets</span></div>
+      <h2 class="section-title" data-fr="Réalisations" data-en="Projects">Réalisations</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date" data-fr="2025-2026 / SAE BUT 2" data-en="2025-2026 / BUT 2 Project">2025-2026 / SAE BUT 2</div>
+            <h3 class="project-title" data-fr="Site E-commerce de Pavage Lego" data-en="Lego Mosaic E-commerce Website">Site E-commerce de Pavage Lego</h3>
+          </div>
+          <div class="project-tags">
+            <span class="tag">PHP</span><span class="tag">Java</span><span class="tag">C</span><span class="tag">SQL</span><span class="tag">E-commerce</span>
+          </div>
+        </div>
+        <div class="project-description">
+          <p data-fr="Transformer une photo en mosaïque Lego commandable en ligne : c'est le problème que ce projet résout de bout en bout. Trois langages, une architecture complète, zéro librairie magique." data-en="Turn a photo into an orderable Lego mosaic online: that's the problem this project solves end to end. Three languages, a complete architecture, built entirely from scratch.">Transformer une photo en mosaïque Lego commandable en ligne : c'est le problème que ce projet résout de bout en bout. Trois langages, une architecture complète, zéro librairie magique.
+          </p>
+          <p data-fr="Java récupère les images depuis PHP, interroge la base et gère la détection et l'envoi des couleurs. Les algorithmes de pavage (le calcul lourd) sont implémentés en C. PHP gère l'upload, le preview en temps réel, le calcul du nombre de pièces, le panier et l'historique de commandes, avec une base SQL relationnelle." data-en="Java fetches images from PHP, queries the database and handles colour detection and dispatch. The mosaic tiling algorithms (the heavy computation) are implemented in C. PHP handles upload, real-time preview, piece count calculation, cart and order history, backed by a relational SQL database.">Java récupère les images depuis PHP, interroge la base et gère la détection et l'envoi des couleurs. Les algorithmes de pavage (le calcul lourd) sont implémentés en C. PHP gère l'upload, le preview en temps réel, le calcul du nombre de pièces, le panier et l'historique de commandes, avec une base SQL relationnelle.
+          </p>
+          <p data-fr="<strong>Ce que j'en retiens :</strong> faire collaborer des langages différents sur un même problème métier, ça ne s'apprend pas dans un cours." data-en="<strong>Key takeaway:</strong> making different languages work together on the same business problem  that's not something you learn in a lecture."><strong>Ce que j'en retiens :</strong> faire collaborer des langages différents sur un même problème métier, ça ne s'apprend pas dans un cours.
+          </p>
+          <a href="https://blockbuilder.mooo.com/" target="_blank" class="project-link" data-fr="Voir le site →" data-en="Live site →">Voir le site →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date">02/07/2024</div>
+            <h3 class="project-title" data-fr="Drone pour Olympiades des Sciences" data-en="Drone for Science Olympics">Drone pour Olympiades des Sciences</h3>
+          </div>
+          <div class="project-tags"><span class="tag">Kivy</span><span class="tag">Python</span><span class="tag">Plan 3D</span><span class="tag">Gestion d'équipe</span></div>
+        </div>
+        <div class="project-description">
+          <p data-fr="Deux rôles sur ce projet : chef d'équipe et développeur. Côté management, j'ai coordonné l'équipe de la conception à la présentation finale. Côté technique, j'ai réalisé le plan 3D général de la structure et développé l'application de contrôle en Kivy : interface embarquée pilotant les capteurs et outils à bord, hors motorisation." data-en="Two roles on this project: team lead and developer. On the management side, I coordinated the team from design to final presentation. On the technical side, I created the 3D structural plan and developed the control app in Kivy: an embedded interface driving onboard sensors and tools, excluding propulsion.">Deux rôles sur ce projet : chef d'équipe et développeur. Côté management, j'ai coordonné l'équipe de la conception à la présentation finale. Côté technique, j'ai réalisé le plan 3D général de la structure et développé l'application de contrôle en Kivy : interface embarquée pilotant les capteurs et outils à bord, hors motorisation.</p>
+          <p data-fr="Classement : <strong>9ème sur 39 établissements</strong> aux Olympiades des Sciences de l'Ingénieur, organisées à l'université Gustave Eiffel (ENSIEE)." data-en="Result: <strong>9th out of 39 schools</strong> at the Science &amp; Engineering Olympics, held at Université Gustave Eiffel (ENSIEE).">Classement : <strong>9ème sur 39 établissements</strong> aux Olympiades des Sciences de l'Ingénieur, organisées à l'université Gustave Eiffel (ENSIEE).</p>
+          <a href="https://www.lyceecassin-leraincy.fr/grid.php?id_menu=40&amp;id_article=294&amp;rel=true" target="_blank" class="project-link" data-fr="Article du lycée →" data-en="School article →">Article du lycée →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date">05/06/2024</div>
+            <h3 class="project-title" data-fr="Maison Connectee IoT" data-en="Connected Smart Home IoT">Maison Connectee IoT</h3>
+          </div>
+          <div class="project-tags"><span class="tag">IoT</span><span class="tag">Node-RED</span><span class="tag">Raspberry Pi</span><span class="tag">Arduino</span><span class="tag">Grand oral</span></div>
+        </div>
+        <div class="project-description">
+          <p data-fr="Projet de grand oral de bac : système domotique reliant capteurs d'humidite et de temperature a un Raspberry Pi et un Arduino, orchestres via Node-RED. Visualisation des flux en temps reel et présentation des résultats devant jury." data-en="Final oral exam project: home automation system linking humidity and temperature sensors to a Raspberry Pi and Arduino, orchestrated via Node-RED. Real-time data visualization and présentation before a jury.">Projet de grand oral de bac : système domotique reliant capteurs d'humidite et de temperature a un Raspberry Pi et un Arduino, orchestres via Node-RED. Visualisation des flux en temps reel et présentation des résultats devant jury.</p>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date">05/08/2024</div>
+            <h3 class="project-title" data-fr="Recherche en Sécurité Web" data-en="Web Security Research">Recherche en Sécurité Web</h3>
+          </div>
+          <div class="project-tags"><span class="tag">HackerOne</span><span class="tag">Bug bounty</span><span class="tag">XSS</span><span class="tag">IDOR</span></div>
+        </div>
+        <div class="project-description">
+          <p data-fr="Apprentissage des méthodologies de bug bounty sur HackerOne : programmes publics et un programme privé dans le secteur des cryptomonnaies. Analyse de rapports existants, compréhension des vulnérabilités courantes (XSS, IDOR, injections) et familiarisation avec les processus de disclosure responsable." data-en="Learning bug bounty methodologies on HackerOne: public programs and one private program in the cryptocurrency sector. Analysis of existing reports, understanding common vulnerabilities (XSS, IDOR, injections) and familiarization with responsible disclosure processes.">Apprentissage des méthodologies de bug bounty sur HackerOne : programmes publics et un programme privé dans le secteur des cryptomonnaies. Analyse de rapports existants, compréhension des vulnérabilités courantes (XSS, IDOR, injections) et familiarisation avec les processus de disclosure responsable.</p>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date" data-fr="Projet personnel" data-en="Personal Project">Projet personnel</div>
+            <h3 class="project-title" data-fr="Tetris en Python" data-en="Tetris in Python">Tetris en Python</h3>
+          </div>
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">EiffelTk</span><span class="tag">SAE</span></div>
+        </div>
+        <div class="project-description">
+          <p data-fr="SAE : implémentation complète du jeu en Python avec EiffelTk. Gestion des collisions, rotation des pièces, niveaux de difficulté et système de score." data-en="SAE: full implementation of the game in Python with EiffelTk. Collision handling, piece rotation, difficulty levels and scoring system.">SAE : implémentation complète du jeu en Python avec EiffelTk. Gestion des collisions, rotation des pièces, niveaux de difficulté et système de score.</p>
+          <a href="https://github.com/ChuFeng-debug/Tetris" target="_blank" class="project-link" data-fr="GitHub →" data-en="GitHub →">GitHub →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date" data-fr="Projet personnel" data-en="Personal Project">Projet personnel</div>
+            <h3 class="project-title" data-fr="Yams en Java" data-en="Yams (Yahtzee) in Java">Yams en Java</h3>
+          </div>
+          <div class="project-tags"><span class="tag">Java</span><span class="tag">FXML</span><span class="tag">MVC</span><span class="tag">SAE</span></div>
+        </div>
+        <div class="project-description">
+          <p data-fr="SAE : jeu de Yahtzee en Java avec interface FXML : architecture MVC propre, séparation logique métier et vue. Gestion des des, regles completes et sauvegarde des parties." data-en="SAE: Yahtzee game in Java with FXML interface: clean MVC architecture, business logic and view séparation. Dice management, complete rules and game saving.">SAE : jeu de Yahtzee en Java avec interface FXML : architecture MVC propre, séparation logique métier et vue. Gestion des des, regles completes et sauvegarde des parties.</p>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date" data-fr="Projet personnel" data-en="Personal Project">Projet personnel</div>
+            <h3 class="project-title" data-fr="Site de Réservation de Billets de Train" data-en="Train Ticket Booking Website">Site de Réservation de Billets de Train</h3>
+          </div>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">PHP</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Full-Stack</span>
+          </div>
+        </div>
+        <div class="project-description">
+          <p data-fr="Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires, gestion du panier et historique des réservations. Front-end développé en React avec gestion des états et routing, back-end en PHP avec base SQL relationnelle." data-en="Full-stack train ticket booking web app: route search, schedule selection, cart management and booking history. Front-end built in React with state management and routing, back-end in PHP with a relational SQL database.">Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires, gestion du panier et historique des réservations. Front-end développé en React avec gestion des états et routing, back-end en PHP avec base SQL relationnelle.</p>
+          <p data-fr="<strong>Ce que j'en retiens :</strong> concevoir une interface utilisateur fluide en React tout en maîtrisant le back-end PHP et la modélisation SQL  le tout déployé en production sur alwaysdata." data-en="<strong>Key takeaway:</strong> designing a smooth React UI while handling the PHP back-end and SQL modelling  deployed end-to-end in production on alwaysdata."><strong>Ce que j'en retiens :</strong> concevoir une interface utilisateur fluide en React tout en maîtrisant le back-end PHP et la modélisation SQL  le tout déployé en production sur alwaysdata.</p>
+          <a href="https://chufeng12.alwaysdata.net/" target="_blank" class="project-link" data-fr="Voir le site →" data-en="Live site →">Voir le site →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date" data-fr="Projet personnel" data-en="Personal Project">Projet personnel</div>
+            <h3 class="project-title" data-fr="Simulateur de Sphère de Bloch" data-en="Bloch Sphere Simulator">Simulateur de Sphère de Bloch</h3>
+          </div>
+          <div class="project-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Three.js</span>
+            <span class="tag">Math.js</span>
+            <span class="tag">Physique quantique</span>
+          </div>
+        </div>
+        <div class="project-description">
+          <p data-fr="Simulateur interactif 3D de sphère de Bloch : visualisation en temps réel des états quantiques d'un qubit et de l'effet des portes logiques quantiques (X, Y, Z, H, S, T). Entièrement développé en JavaScript vanilla avec Three.js pour le rendu 3D et Math.js pour les calculs sur nombres complexes." data-en="Interactive 3D Bloch sphere simulator: real-time visualization of a qubit's quantum states and the effect of quantum logic gates (X, Y, Z, H, S, T). Built entirely in vanilla JavaScript with Three.js for 3D rendering and Math.js for complex number calculations.">Simulateur interactif 3D de sphère de Bloch : visualisation en temps réel des états quantiques d'un qubit et de l'effet des portes logiques quantiques (X, Y, Z, H, S, T). Entièrement développé en JavaScript vanilla avec Three.js pour le rendu 3D et Math.js pour les calculs sur nombres complexes.</p>
+          <p data-fr="Conçu comme un outil pédagogique sous forme de jeu : l'utilisateur doit atteindre des états cibles en enchaînant les portes, avec un mode libre pour l'exploration. Inclut rotation 3D à la souris, zoom, et bascule FR/EN." data-en="Designed as a game-based learning tool: the user must reach target quantum states by chaining gates, with a free exploration mode. Features mouse-driven 3D rotation, zoom, and FR/EN language toggle.">Conçu comme un outil pédagogique sous forme de jeu : l'utilisateur doit atteindre des états cibles en enchaînant les portes, avec un mode libre pour l'exploration. Inclut rotation 3D à la souris, zoom, et bascule FR/EN.</p>
+          <a href="https://chufeng-debug.github.io/Bloch-Simulator/" target="_blank" class="project-link" data-fr="Démo live →" data-en="Live demo →">Démo live →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="formation">
+    <div class="section-header reveal">
+      <div class="section-number"><span data-fr="04 / Formation" data-en="04 / Education">04 / Formation</span></div>
+      <h2 class="section-title" data-fr="Parcours académique" data-en="Academic Background">Parcours académique</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2024-2026</div>
+        <h3 class="timeline-title" data-fr="B.U.T en Informatique" data-en="B.U.T in Computer Science">B.U.T en Informatique</h3>
+        <p class="timeline-description" data-fr="Parcours développement d'applications (2eme annee en cours)" data-en="Application development track (2nd year in progress)">Parcours développement d'applications (2eme annee en cours)</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2023-2024</div>
+        <h3 class="timeline-title" data-fr="Bac Technologique mention Bien" data-en="Technical Baccalauréate with Honours">Bac Technologique mention Bien</h3>
+        <p class="timeline-description" data-fr="Baccalauréat STI2D" data-en="STI2D Baccalauréate">Baccalauréat STI2D</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2022-2024</div>
+        <h3 class="timeline-title" data-fr="Formation en Cybersécurité" data-en="Cybersecurity Training">Formation en Cybersécurité</h3>
+        <p class="timeline-description" data-fr="Apprentissage autonome, tests de penetration" data-en="Self-study, penetration testing">Apprentissage autonome, tests de penetration</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2020-2023</div>
+        <h3 class="timeline-title" data-fr="Formation OpenClassroom" data-en="OpenClassroom Training">Formation OpenClassroom</h3>
+        <p class="timeline-description" data-fr="Programmation et informatique" data-en="Programming and computer science">Programmation et informatique</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-header reveal">
+      <div class="section-number"><span data-fr="05 / Contact" data-en="05 / Contact">05 / Contact</span></div>
+      <h2 class="section-title" data-fr="Et si on se parlait ?" data-en="Let's Talk?">Et si on se parlait ?</h2>
+    </div>
+    <div class="contact-container reveal">
+      <div class="contact-info">
+        <h3 data-fr="Prenons contact" data-en="Get in touch">Prenons contact</h3>
+        <p><span data-fr="Ce portfolio, c'est une page. Mais ce que je peux apporter à votre équipe, c'est une vraie conversation. Disponible pour un" data-en="This portfolio only scratches the surface. What I can bring to your team is a real conversation. Available for an">Ce portfolio, c'est une page. Mais ce que je peux apporter à votre équipe, c'est une vraie conversation. Disponible pour un</span> <strong data-fr="stage dès mi-avril 2026" data-en="internship from mid-April 2026">stage dès mi-avril 2026</strong> <span data-fr="ou une" data-en="or an">ou une</span> <strong data-fr="alternance à partir de septembre 2026" data-en="work-study from September 2026">alternance à partir de septembre 2026</strong>.</p>
+      </div>
+      <form class="contact-form" onsubmit="sendEmail(event)">
+        <div class="form-group"><label data-fr="Nom complet" data-en="Full name">Nom complet</label><input type="text" id="name" required></div>
+        <div class="form-group"><label data-fr="Email" data-en="Email">Email</label><input type="email" id="email" required></div>
+        <div class="form-group"><label data-fr="Entreprise" data-en="Company">Entreprise</label><input type="text" id="company"></div>
+        <div class="form-group"><label data-fr="Type d'opportunité" data-en="Type of opportunity">Type d'opportunité</label><input type="text" id="subject" required data-placeholder-fr="Stage / Alternance / Autre" data-placeholder-en="Internship / Work-study / Other" placeholder="Stage / Alternance / Autre"></div>
+        <div class="form-group"><label data-fr="Message" data-en="Message">Message</label><textarea id="message" required data-placeholder-fr="Décrivez votre opportunité..." data-placeholder-en="Describe your opportunity..." placeholder="Décrivez votre opportunité..."></textarea></div>
+        <button type="submit" class="submit-btn" data-fr="Envoyer le message" data-en="Send message">Envoyer le message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p data-fr="2026 Alexis Belmer. Tous droits réservés." data-en="2026 Alexis Belmer. All rights reserved.">2026 Alexis Belmer. Tous droits réservés.</p>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    // ── DATA PROJETS ──
+    const PROJECTS = [{
+        id: "lego",
+        title: "Site E-commerce de Pavage Lego",
+        date: "2025-2026 / SAE BUT 2",
+        tags: ["PHP", "Java", "C", "SQL", "E-commerce"],
+        skills: ["PHP", "Java", "C", "SQL", "Full-Stack", "Bases de données", "Traitement images", "Langages"],
+        desc: "Transformer une photo en mosaïque Lego commandable en ligne : trois langages, une architecture complète, zéro librairie magique. Java récupère les images depuis PHP, interroge la base et gère la détection des couleurs. Les algorithmes de pavage sont implémentés en C. PHP gère l'upload, le preview, le panier et l'historique de commandes avec une base SQL relationnelle."
+      },
+      {
+        id: "drone",
+        title: "Drone pour Olympiades des Sciences",
+        date: "02/07/2024",
+        tags: ["Kivy", "Python", "Plan 3D", "Chef de projet"],
+        skills: ["Gestion de projet", "Electronique", "Domaines", "Python"],
+        desc: "Deux roles sur ce projet : chef de projet et developpeur. Coordination de l'équipe de la conception a la présentation finale. Realisation du plan 3D general de la structure et développement de l'application de controle en Kivy. Interface embarquee pilotant les capteurs et outils a bord, hors motorisation."
+      },
+      {
+        id: "iot",
+        title: "Maison Connectee IoT",
+        date: "05/06/2024",
+        tags: ["IoT", "Node-RED", "Raspberry Pi", "Arduino"],
+        skills: ["IoT", "Node-RED", "Domaines", "Outils"],
+        desc: "Projet de grand oral de bac : système domotique reliant capteurs d'humidite et de temperature a un Raspberry Pi et un Arduino, orchestres via Node-RED. Visualisation des flux en temps reel et présentation devant jury."
+      },
+      {
+        id: "secu",
+        title: "Recherche en Sécurité Web",
+        date: "05/08/2024",
+        tags: ["HackerOne", "Bug bounty", "XSS", "IDOR"],
+        skills: ["Cybersécurité", "Domaines"],
+        desc: "Apprentissage des méthodologies de bug bounty sur HackerOne : programmes publics et un programme privé dans le secteur des cryptomonnaies. Analyse de rapports existants, compréhension des vulnérabilités courantes (XSS, IDOR, injections) et familiarisation avec les processus de disclosure responsable."
+      },
+      {
+        id: "tetris",
+        title: "Tetris en Python",
+        date: "SAE",
+        tags: ["Python", "EiffelTk", "SAE"],
+        skills: ["Python", "Langages"],
+        desc: "SAE : implémentation complete du jeu en Python avec EiffelTk. Gestion des collisions, rotation des pièces, niveaux de difficulté et système de score."
+      },
+      {
+        id: "yams",
+        title: "Yams en Java",
+        date: "SAE",
+        tags: ["Java", "FXML", "MVC", "SAE"],
+        skills: ["Java", "Langages"],
+        desc: "SAE : jeu de Yahtzee en Java avec interface FXML. Architecture MVC propre, séparation logique métier et vue. Gestion des dés, règles complètes et sauvegarde des parties."
+      },
+      {
+        id: "train",
+        title: "Site de Réservation de Billets de Train",
+        date: "Projet personnel",
+        tags: ["React", "JavaScript", "PHP", "SQL", "Full-Stack"],
+        skills: ["JavaScript", "PHP", "SQL", "Full-Stack", "Bases de données", "Langages"],
+        desc: "Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires, gestion du panier et historique des réservations. Front-end en React, back-end PHP avec base SQL relationnelle, déployé en production sur alwaysdata.",
+        link: "https://chufeng12.alwaysdata.net/"
+      },
+      {
+        id: "bloch",
+        title: "Simulateur de Sphère de Bloch",
+        date: "Projet personnel",
+        tags: ["JavaScript", "Three.js", "Math.js", "Physique quantique"],
+        skills: ["JavaScript", "Langages", "Full-Stack", "Domaines"],
+        desc: "Simulateur interactif 3D de sphère de Bloch : visualisation en temps réel des états d'un qubit sous l'effet de portes quantiques (X, Y, Z, H, S, T). Développé en JavaScript vanilla avec Three.js et Math.js. Mode jeu avec objectifs et mode libre d'exploration.",
+        link: "https://chufeng-debug.github.io/Bloch-Simulator/"
+      }
+    ];
+
+    // ── MODALE ──
+    const overlay = document.getElementById('modal-overlay');
+    const modalBody = document.getElementById('modal-body');
+    const modalEmpty = document.getElementById('modal-empty');
+    const modalTitle = document.getElementById('modal-title');
+    const modalSkillLabel = document.getElementById('modal-skill-label');
+    const modalCounter = document.getElementById('modal-counter');
+    const modalDots = document.getElementById('modal-dots');
+    const btnPrev = document.getElementById('modal-prev');
+    const btnNext = document.getElementById('modal-next');
+    let currentProjects = [],
+      currentIndex = 0;
+
+    function openModal(skillKey, skillLabel) {
+      currentProjects = PROJECTS.filter(p => p.skills.some(s => s.toLowerCase() === skillKey.toLowerCase()));
+      currentIndex = 0;
+      modalSkillLabel.textContent = (window.currentLang === 'en' ? 'Skill: ' : 'Compétence : ') + skillLabel;
+      modalBody.querySelectorAll('.modal-project').forEach(el => el.remove());
+      modalEmpty.style.display = 'none';
+
+      if (currentProjects.length === 0) {
+        modalTitle.textContent = skillLabel;
+        modalCounter.textContent = '';
+        modalEmpty.style.display = 'block';
+        document.getElementById('modal-nav').style.display = 'none';
+      } else {
+        document.getElementById('modal-nav').style.display = 'flex';
+        currentProjects.forEach((p, i) => {
+          const div = document.createElement('div');
+          div.className = 'modal-project' + (i === 0 ? ' active' : '');
+          div.innerHTML =
+            '<div class="modal-project-date">' + p.date + '</div>' +
+            '<div class="modal-project-title">' + p.title + '</div>' +
+            '<div class="modal-project-desc"><p>' + p.desc + '</p></div>' +
+            '<div class="modal-tags">' + p.tags.map(function(t) {
+              return '<span class="modal-tag">' + t + '</span>';
+            }).join('') + '</div>';
+          modalBody.insertBefore(div, modalEmpty);
+        });
+        updateModal();
+      }
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateModal() {
+      const p = currentProjects[currentIndex];
+      modalTitle.textContent = p.title;
+      modalCounter.textContent = (currentIndex + 1) + ' / ' + currentProjects.length;
+      document.querySelectorAll('.modal-project').forEach((el, i) => el.classList.toggle('active', i === currentIndex));
+      btnPrev.disabled = currentIndex === 0;
+      btnNext.disabled = currentIndex === currentProjects.length - 1;
+      modalDots.innerHTML = currentProjects.map((_, i) =>
+        '<div class="modal-dot' + (i === currentIndex ? ' active' : '') + '"></div>'
+      ).join('');
+      modalDots.querySelectorAll('.modal-dot').forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          currentIndex = i;
+          updateModal();
+        });
+      });
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    btnPrev.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateModal();
+      }
+    });
+    btnNext.addEventListener('click', () => {
+      if (currentIndex < currentProjects.length - 1) {
+        currentIndex++;
+        updateModal();
+      }
+    });
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        currentIndex--;
+        updateModal();
+      }
+      if (e.key === 'ArrowRight' && currentIndex < currentProjects.length - 1) {
+        currentIndex++;
+        updateModal();
+      }
+    });
+
+    // Clic sur item ou carte
+    document.querySelectorAll('.skill-category li[data-skill]').forEach(li => {
+      li.addEventListener('click', e => {
+        e.stopPropagation();
+        openModal(li.dataset.skill, li.textContent.trim());
+      });
+    });
+    document.querySelectorAll('.skill-category[data-skill]').forEach(card => {
+      card.addEventListener('click', () => {
+        openModal(card.dataset.skill, card.querySelector('h3').textContent.trim());
+      });
+    });
+
+    // ── PROGRESS ──
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      document.getElementById('progress-bar').style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+    });
+
+    // ── CANVAS ──
+    (function() {
+      const c = document.getElementById('bg-canvas'),
+        ctx = c.getContext('2d');
+      let W, H, nodes;
+
+      function resize() {
+        W = c.width = window.innerWidth;
+        H = c.height = window.innerHeight;
+      }
+
+      function init() {
+        nodes = Array.from({
+          length: 55
+        }, () => ({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - .5) * .35,
+          vy: (Math.random() - .5) * .35,
+          r: Math.random() * 2 + 1
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (const n of nodes) {
+          n.x += n.vx;
+          n.y += n.vy;
+          if (n.x < 0 || n.x > W) n.vx *= -1;
+          if (n.y < 0 || n.y > H) n.vy *= -1;
+        }
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x,
+              dy = nodes[i].y - nodes[j].y,
+              d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 160) {
+              ctx.beginPath();
+              ctx.strokeStyle = 'rgba(255,68,68,' + (1 - d / 160) * .18 + ')';
+              ctx.lineWidth = .8;
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+        for (const n of nodes) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,68,68,.25)';
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener('resize', () => {
+        resize();
+        init();
+      });
+      resize();
+      init();
+      draw();
+      let tx = 500,
+        ty = 300;
+      document.addEventListener('mousemove', e => {
+        tx = e.clientX;
+        ty = e.clientY;
+      });
+      setInterval(() => {
+        for (const n of nodes) {
+          n.vx += (tx - W / 2) / W * .002;
+          n.vy += (ty - H / 2) / H * .002;
+          const s = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+          if (s > .8) {
+            n.vx *= .95;
+            n.vy *= .95;
+          }
+        }
+      }, 50);
+    })();
+
+    // ── TYPEWRITER ──
+    (function() {
+      const phrasesFR = ["Je code depuis l'âge de 15 ans.", "Cybersécurité, développement web, IoT.", "Autodidacte. Curieux. Opérationnel.", "Disponible en stage dès mi-avril 2026."];
+      const phrasesEN = ["Coding since age 15.", "Cybersecurity, web development, IoT.", "Self-taught. Curious. Operational.", "Available for internship from mid-April 2026."];
+      const phrases = window.currentLang === 'en' ? phrasesEN : phrasesFR;
+      const el = document.getElementById('typewriter');
+      let pi = 0,
+        ci = 0,
+        del = false,
+        wait = false;
+
+      function tick() {
+        const p = phrases[pi];
+        if (wait) {
+          wait = false;
+          setTimeout(tick, 1800);
+          return;
+        }
+        if (!del) {
+          el.textContent = p.slice(0, ++ci);
+          if (ci === p.length) {
+            del = true;
+            wait = true;
+            setTimeout(tick, 45);
+            return;
+          }
+          setTimeout(tick, 45);
+        } else {
+          el.textContent = p.slice(0, --ci);
+          if (ci === 0) {
+            del = false;
+            pi = (pi + 1) % phrases.length;
+            setTimeout(tick, 45);
+            return;
+          }
+          setTimeout(tick, 22);
+        }
+      }
+      setTimeout(tick, 900);
+    })();
+
+    // ── COUNTER ──
+    function animateCounter(el) {
+      const target = +el.dataset.target,
+        dur = 1200,
+        t0 = performance.now();
+      (function upd(now) {
+        const t = Math.min((now - t0) / dur, 1),
+          ease = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.floor(ease * target) + (t === 1 ? '+' : '');
+        if (t < 1) requestAnimationFrame(upd);
+      })(performance.now());
+    }
+
+    // ── REVEAL ──
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          e.target.querySelectorAll('.counter').forEach(animateCounter);
+          revObs.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: .1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+    // Fallback: ensure bloc cards are never stuck invisible
+    setTimeout(() => {
+      document.querySelectorAll('.bloc-card.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+    }, 400);
+    const sObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.counter').forEach(animateCounter);
+          sObs.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: .3
+    });
+    const hs = document.querySelector('.hero-stats');
+    if (hs) sObs.observe(hs);
+    const tlObs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 120);
+          tlObs.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: .1
+    });
+    document.querySelectorAll('.timeline-item').forEach(el => tlObs.observe(el));
+
+    // ── SMOOTH SCROLL ──
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
+    });
+
+    // ── EMAIL ──
+    function sendEmail(event) {
+      event.preventDefault();
+      const n = document.getElementById('name').value,
+        e = document.getElementById('email').value,
+        c = document.getElementById('company').value,
+        s = document.getElementById('subject').value,
+        m = document.getElementById('message').value;
+      const body = `Nom: ${n}
+Email: ${e}
+Entreprise: ${c}
+Sujet: ${s}
+
+Message:
+${m}`;
+      const subject = encodeURIComponent((window.currentLang === 'en' ? 'Portfolio - ' : 'Portfolio - ') + s);
+      const bodyEnc = encodeURIComponent(body);
+      window.location.href = 'mailto:alexis.jb.belmer@gmail.com?subject=' + subject + '&body=' + bodyEnc;
+    }
+
+    // ── LANGUAGE SWITCHER ──
+    window.currentLang = 'fr';
+
+    function setLang(lang) {
+      window.currentLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+      });
+      document.querySelectorAll('[data-fr],[data-en]').forEach(el => {
+        const val = el.getAttribute('data-' + lang);
+        if (val !== null && el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA') {
+          el.innerHTML = val;
+        }
+      });
+      // Update placeholders
+      document.querySelectorAll('[data-placeholder-fr],[data-placeholder-en]').forEach(el => {
+        const ph = el.getAttribute('data-placeholder-' + lang);
+        if (ph !== null) el.placeholder = ph;
+      });
+    }
+
+    // ── BLOCS NATIONAUX DATA ──
+    const BLOCS = {
+      1: {
+        num: "Bloc 01",
+        title: "Réaliser un développement d'application",
+        niveau: "Niveau 2  Partir des exigences et aller jusqu'à une application complète",
+        desc: "Ce bloc couvre la capacité à concevoir, développer et tester une application informatique de manière complète : de l'analyse du besoin jusqu'à la livraison d'un logiciel fonctionnel et testé. Il englobe la modélisation (Merise, UML), le développement dans différents paradigmes (objet, procédural, web), et la mise en place de tests pour valider le comportement du programme.",
+        acquis: [
+          "<strong>Concevoir une application avant de la coder.</strong> Je sais modéliser un besoin métier avec Merise (MCD, MLD, MPD) avant d'écrire la première ligne de code. Cette démarche a été appliquée sur le projet e-commerce Lego où la modélisation précédait chaque sprint de développement.",
+          "<strong>Développer avec plusieurs langages sur un même projet.</strong> Je suis capable de faire collaborer PHP, Java et C sur une même architecture : PHP pour le web et la base, Java pour la récupération des images et la détection des couleurs, C pour les algorithmes de pavage  chaque langage assigné à ce qu'il fait le mieux.",
+          "<strong>Construire une application web front-end en React.</strong> Je maîtrise la gestion des composants, des états, du routing et l'intégration d'une API  appliqué sur le <strong>site de réservation de billets de train</strong> (projet personnel, déployé en production sur alwaysdata).",
+          "<strong>Appliquer une architecture MVC propre.</strong> Je sais séparer la logique métier de la vue dans un projet orienté objet. Cette séparation a été mise en pratique sur un projet Java avec interface FXML et sauvegarde des parties.",
+          "<strong>Implémenter un programme complet en bas niveau sans framework.</strong> Je suis capable de gérer collisions, rotations et système de score manuellement, comme réalisé pour un Tetris en Python avec EiffelTk."
+        ],
+        tags: ["PHP", "Java", "C", "Python", "React", "SQL", "MVC", "Merise", "FXML"],
+        gaps: "Je ne maîtrise pas encore les diagrammes UML de manière avancée (séquence, cas d'utilisation détaillés), ni les frameworks de test automatisé de bout en bout comme Selenium ou Cypress. L'accessibilité (WCAG, ARIA) n'a pas encore été intégrée dans mes développements web."
+      },
+      2: {
+        num: "Bloc 02",
+        title: "Optimiser des applications informatiques",
+        niveau: "Niveau 2  Sélectionner les algorithmes adéquats pour répondre à un problème donné",
+        desc: "Ce bloc porte sur l'amélioration continue d'un logiciel existant : mesurer ses performances, identifier les goulots d'étranglement, refactoriser le code pour le rendre plus lisible et maintenable, et mettre en place des tests qui garantissent la non-régression lors des évolutions.",
+        acquis: [
+          "<strong>Mesurer les performances d'algorithmes et comparer les implémentations.</strong> Je sais mettre en place des mesures de temps d'exécution pour évaluer et comparer différentes approches algorithmiques. Cette démarche a été appliquée sur le projet Lego où les algorithmes de traitement d'images en C ont été analysés et leurs performances mesurées.",
+          "<strong>Écrire des tests unitaires pour valider le comportement d'une fonction.</strong> Je maîtrise l'écriture de tests avec JUnit et pytest pour couvrir les fonctions critiques et détecter les régressions. Ces tests ont été mis en place sur les fonctions de calcul de score et les règles métier de projets SAE.",
+          "<strong>Refactoriser un code existant pour le rendre maintenable.</strong> Je sais passer d'un code procédural à une architecture structurée. Cette transformation a été réalisée sur un projet Java en adoptant le pattern MVC et en séparant clairement chaque responsabilité.",
+          "<strong>Optimiser le rendu d'une interface web.</strong> Je comprends les mécanismes de re-rendu en React et sais les limiter via la mémoïsation et le découpage en sous-composants, appliqué sur le <strong>site de réservation de billets de train</strong> (projet personnel déployé en production)."
+        ],
+        tags: ["JUnit", "pytest", "C", "Java", "Profiling", "Refactorisation", "MVC", "React"],
+        gaps: "Je n'ai pas encore utilisé d'outils de profiling dédiés comme VisualVM ou py-spy de manière systématique. L'analyse de complexité algorithmique formelle reste un axe de progression. La mise en place de pipelines CI/CD pour l'automatisation des tests est à acquérir."
+      },
+      3: {
+        num: "Bloc 03",
+        title: "Administrer des systèmes informatiques communicants complexes",
+        niveau: "Niveau 2  Déployer des services dans une architecture réseau",
+        desc: "Ce bloc concerne l'administration des infrastructures informatiques : systèmes d'exploitation (Linux), réseaux (configuration IP, routage, protocoles), services (Apache, SSH, DNS…) et sécurité de base (droits, firewall, gestion des accès). Il s'agit de faire fonctionner et de sécuriser un environnement technique complet.",
+        acquis: [
+          "<strong>Utiliser Linux en ligne de commande au quotidien.</strong> Je travaille en bash de façon autonome pour gérer les processus, les droits, les cron jobs et les paquets. Ces compétences sont mobilisées en continu dans tous mes projets hébergés sur serveur Linux.",
+          "<strong>Configurer un réseau local (adressage, routage, passerelle).</strong> Je sais attribuer des adresses IP, définir des masques de sous-réseau et configurer le routage. Ces notions ont été pratiquées en cours réseaux et appliquées sur le projet IoT avec Raspberry Pi en réseau local.",
+          "<strong>Déployer et configurer des services web.</strong> Je sais mettre en place Apache, gérer les virtual hosts et configurer SSH et FTP. Ces services ont été déployés pour héberger le <strong>site e-commerce Block Builder</strong> (blockbuilder.mooo.com) et le <strong>site de réservation de billets de train</strong> sur alwaysdata.",
+          "<strong>Appliquer les bases de la sécurité système.</strong> Je gère les droits Unix (chmod, chown), configure un pare-feu basique et comprends les vecteurs d'attaque courants (XSS, IDOR, injections SQL) grâce à la pratique du bug bounty sur HackerOne.",
+          "<strong>Orchestrer des équipements communicants.</strong> Je sais faire dialoguer plusieurs cartes (Raspberry Pi, Arduino) via des protocoles comme MQTT, orchestrés avec Node-RED pour un système domotique temps réel."
+        ],
+        tags: ["Linux", "Bash", "Apache", "SSH", "Réseau IP", "Firewall", "Node-RED", "Raspberry Pi", "IoT"],
+        gaps: "Je n'ai pas encore administré d'environnements en production de grande échelle (haute disponibilité, load balancing). La virtualisation avancée avec Proxmox ou VMware et les conteneurs Docker et Kubernetes sont des axes à développer. La configuration de VPN ou de VLAN reste à approfondir."
+      },
+      4: {
+        num: "Bloc 04",
+        title: "Gérer des données de l'information",
+        niveau: "Niveau 2  Optimiser une base de données, interagir avec une application et mettre en œuvre la sécurité",
+        desc: "Ce bloc couvre tout le cycle de vie de la donnée : modélisation conceptuelle et logique (Merise), conception de schémas relationnels normalisés, écriture de requêtes SQL avancées, et exploitation programmatique des données via PHP ou Python pour produire de la valeur à partir des bases.",
+        acquis: [
+          "<strong>Modéliser un besoin métier sous forme de base de données.</strong> Je sais construire un MCD à partir d'une analyse fonctionnelle, le dériver en MLD puis en MPD normalisé en 3NF. Cette démarche complète a été appliquée sur le projet e-commerce Lego avec gestion des entités, associations et cardinalités.",
+          "<strong>Écrire des requêtes SQL avancées pour exploiter des données complexes.</strong> Je maîtrise les JOINs (INNER, LEFT), les sous-requêtes, le GROUP BY avec HAVING et les transactions pour garantir l'intégrité des données. Ces requêtes ont servi à gérer commandes, panier et historiques utilisateurs.",
+          "<strong>Exploiter une base de données depuis du code applicatif de façon sécurisée.</strong> Je sais utiliser PDO en PHP avec des requêtes préparées pour prévenir les injections SQL, et accéder à une base via Python dans des scripts de traitement et d'analyse de données.",
+          "<strong>Administrer une base de données relationnelle.</strong> Je sais créer des bases, gérer les utilisateurs et les droits, importer/exporter des dumps et travailler aussi bien via phpMyAdmin qu'en ligne de commande avec MySQL et PostgreSQL."
+        ],
+        tags: ["Merise", "MCD/MLD/MPD", "SQL", "JOIN", "PHP PDO", "Python", "MySQL", "PostgreSQL", "Normalisation"],
+        gaps: "Je n'ai pas encore pratiqué les bases de données NoSQL comme MongoDB ou Redis. L'optimisation des requêtes via les index et l'analyse des plans d'exécution avec EXPLAIN reste à approfondir. Le Big Data et les outils d'analyse de type Pandas ou Spark sont à acquérir."
+      },
+      5: {
+        num: "Bloc 05",
+        title: "Conduire un projet",
+        niveau: "Niveau 2  Appliquer une démarche de suivi de projet en fonction des besoins métiers",
+        desc: "Ce bloc concerne la capacité à mener un projet informatique de bout en bout : planification, organisation du travail en équipe, communication professionnelle, utilisation de méthodes agiles et d'outils collaboratifs (Git, outils de suivi). Il valorise autant le travail d'équipe que la livraison concrète.",
+        acquis: [
+          "<strong>Assumer un rôle de chef de projet de bout en bout.</strong> Je sais coordonner une équipe, répartir les tâches, suivre l'avancement et communiquer avec les parties prenantes jusqu'à la présentation finale devant jury. Ce rôle a été pleinement exercé sur le projet Drone pour les Olympiades des Sciences.",
+          "<strong>Travailler en méthode agile avec des sprints et un backlog priorisé.</strong> Je sais organiser les livrables par itérations, animer des rétrospectives et ajuster les priorités en cours de route. Cette méthode a été pratiquée dans les SAE du BUT avec feedback régulier des encadrants.",
+          "<strong>Collaborer sur un dépôt Git en équipe.</strong> Je maîtrise le flux Git Flow avec branches de fonctionnalité, pull requests et résolution de conflits de merge. Ce mode de travail a été appliqué en équipe sur plusieurs projets SAE.",
+          "<strong>Communiquer un projet technique devant un public non spécialiste.</strong> Je sais vulgariser un sujet technique, structurer une présentation et répondre à des questions de jury, comme réalisé pour le grand oral du bac et les soutenances de SAE."
+        ],
+        tags: ["Scrum", "Agile", "Git Flow", "Chef de projet", "GitHub", "Communication", "Travail d'équipe"],
+        gaps: "Je n'ai pas encore utilisé d'outils de gestion de projet dédiés comme Jira ou Trello dans un contexte professionnel réel. La gestion de risques formelle et la rédaction de cahiers des charges complets sont à renforcer."
+      },
+      6: {
+        num: "Bloc 06",
+        title: "Construire son parcours professionnel dans l'informatique",
+        niveau: "Niveau 2  Situer son rôle et ses missions au sein d'une équipe informatique",
+        desc: "Ce bloc porte sur la construction d'une identité professionnelle cohérente : définir son projet de carrière, valoriser ses compétences, s'insérer dans le monde du travail et développer les soft skills nécessaires à l'évolution dans le secteur informatique.",
+        acquis: [
+          "<strong>Valoriser ses compétences avec un portfolio professionnel.</strong> Je sais construire une présentation structurée de mon parcours, de mes projets et de mes compétences. Ce portfolio bilingue (FR/EN) en HTML/CSS/JS est lui-même la démonstration de cette capacité.",
+          "<strong>Mener une recherche de stage ou d'alternance de façon structurée.</strong> Je sais cibler des entreprises, adapter mes candidatures et argumenter mon projet professionnel. Cette démarche est active depuis plusieurs mois pour un stage dès mi-avril 2026 et une alternance en septembre 2026.",
+          "<strong>Présenter et défendre son travail devant un jury.</strong> Je sais préparer une présentation orale, gérer le stress et répondre à des questions critiques. Cette compétence a été développée lors du grand oral du bac et des soutenances de SAE en BUT.",
+          "<strong>Avoir un projet professionnel clair et une veille active.</strong> Je sais identifier les domaines qui m'intéressent (cybersécurité, développement web) et me former en continu de façon autonome, comme illustré par 5 ans d'apprentissage autodidacte avant même d'entrer en BUT."
+        ],
+        tags: ["Portfolio", "CV", "Recherche de stage", "Communication", "Présentation", "Cybersécurité", "Veille techno"],
+        gaps: "Je n'ai pas encore eu d'expérience professionnelle en entreprise (stage ou alternance). La gestion du stress en entretien et la négociation salariale sont des axes à travailler. Les certifications professionnelles comme CompTIA Security+ sont dans ma roadmap."
+      }
+    };
+    // ── OPEN BLOC MODAL ──
+    function openBlocModal(num) {
+      const d = BLOCS[num];
+      if (!d) return;
+      document.getElementById('bm-num').textContent = d.num;
+      document.getElementById('bm-title').textContent = d.title;
+      const niveauEl = document.getElementById('bm-niveau');
+      if (niveauEl) niveauEl.textContent = d.niveau || '';
+
+      let html = '';
+
+      // Description
+      html += '<div class="bm-section">';
+      html += '<div class="bm-section-label">Description du bloc</div>';
+      html += '<p>' + d.desc + '</p>';
+      html += '</div>';
+
+      // Ce que je sais faire
+      html += '<div class="bm-section">';
+      html += '<div class="bm-section-label">Ce que je sais faire  Argumentaire</div>';
+      html += '<ul>';
+      d.acquis.forEach(a => {
+        html += '<li>' + a + '</li>';
+      });
+      html += '</ul>';
+      html += '<div class="bm-tag-row">' + d.tags.map(t => '<span class="bm-tag">' + t + '</span>').join('') + '</div>';
+      html += '</div>';
+
+      // Ce que je ne sais pas encore
+      html += '<div class="bm-section">';
+      html += '<div class="bm-section-label">Points de progression (ce que je ne maîtrise pas encore)</div>';
+      html += '<div class="bm-gap">' + d.gaps + '</div>';
+      html += '</div>';
+
+      document.getElementById('bm-body').innerHTML = html;
+      document.getElementById('bloc-modal-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBlocModal() {
+      document.getElementById('bloc-modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('bloc-modal-close').addEventListener('click', closeBlocModal);
+    document.getElementById('bloc-modal-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeBlocModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.getElementById('bloc-modal-overlay').classList.contains('open')) closeBlocModal();
+    });
+    document.querySelectorAll('.bloc-card[data-bloc]').forEach(card => {
+      card.addEventListener('click', () => openBlocModal(+card.dataset.bloc));
+    });
+
+  </script>
+</body>
+
+</html>
