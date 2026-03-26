@@ -1431,7 +1431,7 @@
         </ul>
       </div>
       <div class="skill-category reveal" data-skill="Domaines">
-        <h3 data-fr="Domaines" data-en="Fields">Domaines</h3>
+        <h3 data-fr="Domaines <span style='font-size:0.6em; color:var(--accent); animation: blink 1.5s infinite;'>(Cliquez-moi)</span>" data-en="Fields <span style='font-size:0.6em; color:var(--accent); animation: blink 1.5s infinite;'>(Click me)</span>">Domaines <span style='font-size:0.6em; color:var(--accent); animation: blink 1.5s infinite;'>(Cliquez-moi)</span></h3>
         <ul>
           <li data-skill="Full-Stack" data-fr="Développement Web Full-Stack" data-en="Full-Stack Web Development">Développement Web Full-Stack</li>
           <li data-skill="Bases de données" data-fr="Bases de données" data-en="Databases">Bases de données</li>
@@ -1522,6 +1522,7 @@
       <h2 class="section-title" data-fr="Réalisations" data-en="Projects">Réalisations</h2>
     </div>
     <div class="projects-grid">
+      
       <div class="project-card reveal">
         <div class="project-meta">
           <div>
@@ -1533,15 +1534,13 @@
           </div>
         </div>
         <div class="project-description">
-          <p data-fr="Transformer une photo en mosaïque Lego commandable en ligne : c'est le problème que ce projet résout de bout en bout. Trois langages, une architecture complète, zéro librairie magique." data-en="Turn a photo into an orderable Lego mosaic online: that's the problem this project solves end to end. Three languages, a complete architecture, built entirely from scratch.">Transformer une photo en mosaïque Lego commandable en ligne : c'est le problème que ce projet résout de bout en bout. Trois langages, une architecture complète, zéro librairie magique.
-          </p>
-          <p data-fr="Java récupère les images depuis PHP, interroge la base et gère la détection et l'envoi des couleurs. Les algorithmes de pavage (le calcul lourd) sont implémentés en C. PHP gère l'upload, le preview en temps réel, le calcul du nombre de pièces, le panier et l'historique de commandes, avec une base SQL relationnelle." data-en="Java fetches images from PHP, queries the database and handles colour detection and dispatch. The mosaic tiling algorithms (the heavy computation) are implemented in C. PHP handles upload, real-time preview, piece count calculation, cart and order history, backed by a relational SQL database.">Java récupère les images depuis PHP, interroge la base et gère la détection et l'envoi des couleurs. Les algorithmes de pavage (le calcul lourd) sont implémentés en C. PHP gère l'upload, le preview en temps réel, le calcul du nombre de pièces, le panier et l'historique de commandes, avec une base SQL relationnelle.
-          </p>
-          <p data-fr="<strong>Ce que j'en retiens :</strong> faire collaborer des langages différents sur un même problème métier, ça ne s'apprend pas dans un cours." data-en="<strong>Key takeaway:</strong> making different languages work together on the same business problem  that's not something you learn in a lecture."><strong>Ce que j'en retiens :</strong> faire collaborer des langages différents sur un même problème métier, ça ne s'apprend pas dans un cours.
-          </p>
+          <p data-fr="Transformer une photo en mosaïque Lego commandable en ligne : c'est le problème que ce projet résout de bout en bout. Trois langages, une architecture complète, zéro librairie magique." data-en="Turn a photo into an orderable Lego mosaic online: that's the problem this project solves end to end. Three languages, a complete architecture, built entirely from scratch.">Transformer une photo en mosaïque Lego commandable en ligne : c'est le problème que ce projet résout de bout en bout. Trois langages, une architecture complète, zéro librairie magique.</p>
+          <p data-fr="Java récupère les images depuis PHP, interroge la base et gère la détection et l'envoi des couleurs. Les algorithmes de pavage (le calcul lourd) sont implémentés en C. PHP gère l'upload, le preview en temps réel, le calcul du nombre de pièces, le panier et l'historique de commandes, avec une base SQL relationnelle." data-en="Java fetches images from PHP, queries the database and handles colour detection and dispatch. The mosaic tiling algorithms (the heavy computation) are implemented in C. PHP handles upload, real-time preview, piece count calculation, cart and order history, backed by a relational SQL database.">Java récupère les images depuis PHP, interroge la base et gère la détection et l'envoi des couleurs. Les algorithmes de pavage (le calcul lourd) sont implémentés en C. PHP gère l'upload, le preview en temps réel, le calcul du nombre de pièces, le panier et l'historique de commandes, avec une base SQL relationnelle.</p>
+          <button class="project-link" onclick="openProjectDetails('lego')" style="background:var(--primary); color:white; cursor:pointer; border:none;" data-fr="Voir schémas & codes +" data-en="View schemas & codes +">Voir schémas & codes +</button>
           <a href="https://blockbuilder.mooo.com/" target="_blank" class="project-link" data-fr="Voir le site →" data-en="Live site →">Voir le site →</a>
         </div>
       </div>
+
       <div class="project-card reveal">
         <div class="project-meta">
           <div>
@@ -1552,59 +1551,41 @@
         </div>
         <div class="project-description">
           <p data-fr="Deux rôles sur ce projet : chef d'équipe et développeur. Côté management, j'ai coordonné l'équipe de la conception à la présentation finale. Côté technique, j'ai réalisé le plan 3D général de la structure et développé l'application de contrôle en Kivy : interface embarquée pilotant les capteurs et outils à bord, hors motorisation." data-en="Two roles on this project: team lead and developer. On the management side, I coordinated the team from design to final presentation. On the technical side, I created the 3D structural plan and developed the control app in Kivy: an embedded interface driving onboard sensors and tools, excluding propulsion.">Deux rôles sur ce projet : chef d'équipe et développeur. Côté management, j'ai coordonné l'équipe de la conception à la présentation finale. Côté technique, j'ai réalisé le plan 3D général de la structure et développé l'application de contrôle en Kivy : interface embarquée pilotant les capteurs et outils à bord, hors motorisation.</p>
-          <p data-fr="Classement : <strong>9ème sur 39 établissements</strong> aux Olympiades des Sciences de l'Ingénieur, organisées à l'université Gustave Eiffel (ENSIEE)." data-en="Result: <strong>9th out of 39 schools</strong> at the Science &amp; Engineering Olympics, held at Université Gustave Eiffel (ENSIEE).">Classement : <strong>9ème sur 39 établissements</strong> aux Olympiades des Sciences de l'Ingénieur, organisées à l'université Gustave Eiffel (ENSIEE).</p>
+          <p data-fr="Classement : <strong>9ème sur 39 établissements</strong> aux Olympiades." data-en="Result: <strong>9th out of 39 schools</strong> at the Science Olympics.">Classement : <strong>9ème sur 39 établissements</strong> aux Olympiades.</p>
+          <button class="project-link" onclick="openProjectDetails('drone')" style="background:var(--primary); color:white; cursor:pointer; border:none;" data-fr="Détails du projet +" data-en="Project details +">Détails du projet +</button>
           <a href="https://www.lyceecassin-leraincy.fr/grid.php?id_menu=40&amp;id_article=294&amp;rel=true" target="_blank" class="project-link" data-fr="Article du lycée →" data-en="School article →">Article du lycée →</a>
         </div>
       </div>
-      <div class="project-card reveal">
-        <div class="project-meta">
-          <div>
-            <div class="project-date">05/06/2024</div>
-            <h3 class="project-title" data-fr="Maison Connectee IoT" data-en="Connected Smart Home IoT">Maison Connectee IoT</h3>
-          </div>
-          <div class="project-tags"><span class="tag">IoT</span><span class="tag">Node-RED</span><span class="tag">Raspberry Pi</span><span class="tag">Arduino</span><span class="tag">Grand oral</span></div>
-        </div>
-        <div class="project-description">
-          <p data-fr="Projet de grand oral de bac : système domotique reliant capteurs d'humidite et de temperature a un Raspberry Pi et un Arduino, orchestres via Node-RED. Visualisation des flux en temps reel et présentation des résultats devant jury." data-en="Final oral exam project: home automation system linking humidity and temperature sensors to a Raspberry Pi and Arduino, orchestrated via Node-RED. Real-time data visualization and présentation before a jury.">Projet de grand oral de bac : système domotique reliant capteurs d'humidite et de temperature a un Raspberry Pi et un Arduino, orchestres via Node-RED. Visualisation des flux en temps reel et présentation des résultats devant jury.</p>
-        </div>
-      </div>
-      <div class="project-card reveal">
-        <div class="project-meta">
-          <div>
-            <div class="project-date">05/08/2024</div>
-            <h3 class="project-title" data-fr="Recherche en Sécurité Web" data-en="Web Security Research">Recherche en Sécurité Web</h3>
-          </div>
-          <div class="project-tags"><span class="tag">HackerOne</span><span class="tag">Bug bounty</span><span class="tag">XSS</span><span class="tag">IDOR</span></div>
-        </div>
-        <div class="project-description">
-          <p data-fr="Apprentissage des méthodologies de bug bounty sur HackerOne : programmes publics et un programme privé dans le secteur des cryptomonnaies. Analyse de rapports existants, compréhension des vulnérabilités courantes (XSS, IDOR, injections) et familiarisation avec les processus de disclosure responsable." data-en="Learning bug bounty methodologies on HackerOne: public programs and one private program in the cryptocurrency sector. Analysis of existing reports, understanding common vulnerabilities (XSS, IDOR, injections) and familiarization with responsible disclosure processes.">Apprentissage des méthodologies de bug bounty sur HackerOne : programmes publics et un programme privé dans le secteur des cryptomonnaies. Analyse de rapports existants, compréhension des vulnérabilités courantes (XSS, IDOR, injections) et familiarisation avec les processus de disclosure responsable.</p>
-        </div>
-      </div>
+
       <div class="project-card reveal">
         <div class="project-meta">
           <div>
             <div class="project-date" data-fr="Projet personnel" data-en="Personal Project">Projet personnel</div>
+            <h3 class="project-title" data-fr="Outil d'Administration Réseau (DuxTool)" data-en="Network Admin Tool (DuxTool)">Outil d'Administration Réseau (DuxTool)</h3>
+          </div>
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">Scapy</span><span class="tag">Réseau</span><span class="tag">Sécurité</span></div>
+        </div>
+        <div class="project-description">
+          <p data-fr="Développement d'un outil d'administration et d'analyse réseau en Python. Utilisation de Scapy et NetfilterQueue pour l'inspection de paquets, le filtrage et la manipulation de trames (ARP poisoning, DNS spoofing)." data-en="Development of a network administration and analysis tool in Python. Use of Scapy and NetfilterQueue for packet inspection, filtering and frame manipulation (ARP poisoning, DNS spoofing).">Développement d'un outil d'administration et d'analyse réseau en Python. Utilisation de Scapy et NetfilterQueue pour l'inspection de paquets, le filtrage et la manipulation de trames (ARP poisoning, DNS spoofing).</p>
+          <button class="project-link" onclick="openProjectDetails('duxtool')" style="background:var(--primary); color:white; cursor:pointer; border:none;" data-fr="Voir preuves techniques +" data-en="View technical proofs +">Voir preuves techniques +</button>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-meta">
+          <div>
+            <div class="project-date" data-fr="SAE" data-en="SAE">SAE</div>
             <h3 class="project-title" data-fr="Tetris en Python" data-en="Tetris in Python">Tetris en Python</h3>
           </div>
           <div class="project-tags"><span class="tag">Python</span><span class="tag">EiffelTk</span><span class="tag">SAE</span></div>
         </div>
         <div class="project-description">
-          <p data-fr="SAE : implémentation complète du jeu en Python avec EiffelTk. Gestion des collisions, rotation des pièces, niveaux de difficulté et système de score." data-en="SAE: full implementation of the game in Python with EiffelTk. Collision handling, piece rotation, difficulty levels and scoring system.">SAE : implémentation complète du jeu en Python avec EiffelTk. Gestion des collisions, rotation des pièces, niveaux de difficulté et système de score.</p>
+          <p data-fr="SAE : implémentation complète du jeu en Python avec EiffelTk. Gestion des collisions, rotation matricielle des pièces, niveaux de difficulté et système de score avec modificateurs." data-en="SAE: full implementation of the game in Python with EiffelTk. Collision handling, matrix piece rotation, difficulty levels and dynamic scoring system.">SAE : implémentation complète du jeu en Python avec EiffelTk. Gestion des collisions, rotation matricielle des pièces, niveaux de difficulté et système de score avec modificateurs.</p>
+          <button class="project-link" onclick="openProjectDetails('tetris')" style="background:var(--primary); color:white; cursor:pointer; border:none;" data-fr="Voir extraits de code +" data-en="View code snippets +">Voir extraits de code +</button>
           <a href="https://github.com/ChuFeng-debug/Tetris" target="_blank" class="project-link" data-fr="GitHub →" data-en="GitHub →">GitHub →</a>
         </div>
       </div>
-      <div class="project-card reveal">
-        <div class="project-meta">
-          <div>
-            <div class="project-date" data-fr="Projet personnel" data-en="Personal Project">Projet personnel</div>
-            <h3 class="project-title" data-fr="Yams en Java" data-en="Yams (Yahtzee) in Java">Yams en Java</h3>
-          </div>
-          <div class="project-tags"><span class="tag">Java</span><span class="tag">FXML</span><span class="tag">MVC</span><span class="tag">SAE</span></div>
-        </div>
-        <div class="project-description">
-          <p data-fr="SAE : jeu de Yahtzee en Java avec interface FXML : architecture MVC propre, séparation logique métier et vue. Gestion des des, regles completes et sauvegarde des parties." data-en="SAE: Yahtzee game in Java with FXML interface: clean MVC architecture, business logic and view séparation. Dice management, complete rules and game saving.">SAE : jeu de Yahtzee en Java avec interface FXML : architecture MVC propre, séparation logique métier et vue. Gestion des des, regles completes et sauvegarde des parties.</p>
-        </div>
-      </div>
+
       <div class="project-card reveal">
         <div class="project-meta">
           <div>
@@ -1612,19 +1593,17 @@
             <h3 class="project-title" data-fr="Site de Réservation de Billets de Train" data-en="Train Ticket Booking Website">Site de Réservation de Billets de Train</h3>
           </div>
           <div class="project-tags">
-            <span class="tag">React</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">PHP</span>
-            <span class="tag">SQL</span>
-            <span class="tag">Full-Stack</span>
+            <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">SQL</span><span class="tag">Full-Stack</span>
           </div>
         </div>
         <div class="project-description">
-          <p data-fr="Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires, gestion du panier et historique des réservations. Front-end développé en React avec gestion des états et routing, back-end en PHP avec base SQL relationnelle." data-en="Full-stack train ticket booking web app: route search, schedule selection, cart management and booking history. Front-end built in React with state management and routing, back-end in PHP with a relational SQL database.">Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires, gestion du panier et historique des réservations. Front-end développé en React avec gestion des états et routing, back-end en PHP avec base SQL relationnelle.</p>
-          <p data-fr="<strong>Ce que j'en retiens :</strong> concevoir une interface utilisateur fluide en React tout en maîtrisant le back-end PHP et la modélisation SQL  le tout déployé en production sur alwaysdata." data-en="<strong>Key takeaway:</strong> designing a smooth React UI while handling the PHP back-end and SQL modelling  deployed end-to-end in production on alwaysdata."><strong>Ce que j'en retiens :</strong> concevoir une interface utilisateur fluide en React tout en maîtrisant le back-end PHP et la modélisation SQL  le tout déployé en production sur alwaysdata.</p>
+          <p data-fr="Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires, gestion du panier et historique des réservations. Front-end en React, back-end en PHP avec base SQL relationnelle." data-en="Full-stack train ticket booking web app: route search, schedule selection, cart management and booking history. Front-end built in React, back-end in PHP with a relational SQL database.">Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires, gestion du panier et historique des réservations. Front-end en React, back-end en PHP avec base SQL relationnelle.</p>
+          <p data-fr="<strong>Ce que j'en retiens :</strong> concevoir une interface utilisateur fluide en React tout en maîtrisant le back-end PHP et la modélisation SQL le tout déployé en production sur alwaysdata." data-en="<strong>Key takeaway:</strong> designing a smooth React UI while handling the PHP back-end and SQL modelling deployed end-to-end in production on alwaysdata."><strong>Ce que j'en retiens :</strong> concevoir une interface utilisateur fluide en React tout en maîtrisant le back-end PHP et la modélisation SQL le tout déployé en production sur alwaysdata.</p>
+          <button class="project-link" onclick="openProjectDetails('train')" style="background:var(--primary); color:white; cursor:pointer; border:none;" data-fr="Voir preuve d'architecture +" data-en="View architecture proof +">Voir preuve d'architecture +</button>
           <a href="https://chufeng12.alwaysdata.net/" target="_blank" class="project-link" data-fr="Voir le site →" data-en="Live site →">Voir le site →</a>
         </div>
       </div>
+
       <div class="project-card reveal">
         <div class="project-meta">
           <div>
@@ -1632,18 +1611,16 @@
             <h3 class="project-title" data-fr="Simulateur de Sphère de Bloch" data-en="Bloch Sphere Simulator">Simulateur de Sphère de Bloch</h3>
           </div>
           <div class="project-tags">
-            <span class="tag">JavaScript</span>
-            <span class="tag">Three.js</span>
-            <span class="tag">Math.js</span>
-            <span class="tag">Physique quantique</span>
+            <span class="tag">JavaScript</span><span class="tag">Three.js</span><span class="tag">Math.js</span><span class="tag">Quantique</span>
           </div>
         </div>
         <div class="project-description">
-          <p data-fr="Simulateur interactif 3D de sphère de Bloch : visualisation en temps réel des états quantiques d'un qubit et de l'effet des portes logiques quantiques (X, Y, Z, H, S, T). Entièrement développé en JavaScript vanilla avec Three.js pour le rendu 3D et Math.js pour les calculs sur nombres complexes." data-en="Interactive 3D Bloch sphere simulator: real-time visualization of a qubit's quantum states and the effect of quantum logic gates (X, Y, Z, H, S, T). Built entirely in vanilla JavaScript with Three.js for 3D rendering and Math.js for complex number calculations.">Simulateur interactif 3D de sphère de Bloch : visualisation en temps réel des états quantiques d'un qubit et de l'effet des portes logiques quantiques (X, Y, Z, H, S, T). Entièrement développé en JavaScript vanilla avec Three.js pour le rendu 3D et Math.js pour les calculs sur nombres complexes.</p>
-          <p data-fr="Conçu comme un outil pédagogique sous forme de jeu : l'utilisateur doit atteindre des états cibles en enchaînant les portes, avec un mode libre pour l'exploration. Inclut rotation 3D à la souris, zoom, et bascule FR/EN." data-en="Designed as a game-based learning tool: the user must reach target quantum states by chaining gates, with a free exploration mode. Features mouse-driven 3D rotation, zoom, and FR/EN language toggle.">Conçu comme un outil pédagogique sous forme de jeu : l'utilisateur doit atteindre des états cibles en enchaînant les portes, avec un mode libre pour l'exploration. Inclut rotation 3D à la souris, zoom, et bascule FR/EN.</p>
+          <p data-fr="Simulateur interactif 3D de sphère de Bloch : visualisation en temps réel des états quantiques d'un qubit et de l'effet des portes logiques quantiques (X, Y, Z, H, S, T). Développé en JavaScript vanilla avec Three.js et Math.js." data-en="Interactive 3D Bloch sphere simulator: real-time visualization of a qubit's quantum states and the effect of quantum logic gates (X, Y, Z, H, S, T). Built entirely in vanilla JavaScript with Three.js and Math.js.">Simulateur interactif 3D de sphère de Bloch : visualisation en temps réel des états quantiques d'un qubit et de l'effet des portes logiques quantiques (X, Y, Z, H, S, T). Développé en JavaScript vanilla avec Three.js et Math.js.</p>
+          <button class="project-link" onclick="openProjectDetails('bloch')" style="background:var(--primary); color:white; cursor:pointer; border:none;" data-fr="Détails du projet +" data-en="Project details +">Détails du projet +</button>
           <a href="https://chufeng-debug.github.io/Bloch-Simulator/" target="_blank" class="project-link" data-fr="Démo live →" data-en="Live demo →">Démo live →</a>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -1704,13 +1681,15 @@
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script>
     // ── DATA PROJETS ──
-    const PROJECTS = [{
+    // ── DATA PROJETS ──
+    const PROJECTS = [
+      {
         id: "lego",
         title: "Site E-commerce de Pavage Lego",
         date: "2025-2026 / SAE BUT 2",
         tags: ["PHP", "Java", "C", "SQL", "E-commerce"],
         skills: ["PHP", "Java", "C", "SQL", "Full-Stack", "Bases de données", "Traitement images", "Langages"],
-        desc: "Transformer une photo en mosaïque Lego commandable en ligne : trois langages, une architecture complète, zéro librairie magique. Java récupère les images depuis PHP, interroge la base et gère la détection des couleurs. Les algorithmes de pavage sont implémentés en C. PHP gère l'upload, le preview, le panier et l'historique de commandes avec une base SQL relationnelle."
+        desc: "Transformer une photo en mosaïque Lego commandable en ligne : trois langages, une architecture complète, zéro librairie magique. Java récupère les images depuis PHP, interroge la base et gère la détection des couleurs. Les algorithmes de pavage sont implémentés en C. PHP gère l'upload, le preview, le panier et l'historique de commandes avec une base SQL relationnelle.<br><br><b>Preuve de modélisation (Base de données) :</b><br><img src=\"Capture d'écran 2026-03-26 210845.png\" style=\"max-width:100%; border:1px solid var(--border); border-radius:4px; margin-top:0.5rem;\"><br><br><b>Extrait C (Algorithme de calcul de distance sous contrainte de stock) :</b><br><pre style=\"background:#1e1e1e; color:#d4d4d4; padding:1rem; border-radius:4px; overflow-x:auto; font-size:0.85rem; margin-top:0.5rem; font-family:monospace;\"><code>int find_closest_brick(Color pixel, Brick* bricks, int brick_count, int* brick_usage) {\n    double min_dist = 1e9;\n    int best_idx = -1;\n    \n    for (int i = 0; i < brick_count; i++) {\n        if (brick_usage[i] < bricks[i].stock) {\n            double dist = color_distance(pixel, bricks[i].rgb);\n            if (dist < min_dist) {\n                min_dist = dist;\n                best_idx = i;\n            }\n        }\n    }\n    return best_idx;\n}</code></pre><br><b>Extrait Java (Orchestration et appel asynchrone du programme C) :</b><br><pre style=\"background:#1e1e1e; color:#d4d4d4; padding:1rem; border-radius:4px; overflow-x:auto; font-size:0.85rem; margin-top:0.5rem; font-family:monospace;\"><code>private static void callCProgram(String pixelsFile, String bricksFile, String method, String outputFile) throws IOException {\n    String command = String.format(\"./pavage %s %s %s %s\", pixelsFile, bricksFile, outputFile, method);\n    Process process = Runtime.getRuntime().exec(command);\n    \n    // Lecture asynchrone des flux (stdout/stderr) via des Threads dédiés\n    Thread outputThread = new Thread(() -> { /* Lecture de process.getInputStream() */ });\n    outputThread.start();\n    \n    try {\n        int exitCode = process.waitFor();\n        if (exitCode != 0) throw new IOException(\"C program failed with code: \" + exitCode);\n    } catch (InterruptedException e) {\n        throw new IOException(\"Interrupted\");\n    }\n}</code></pre><br><b>Résultat de l'algorithme C (Avant/Après) :</b><br><div style=\"display:flex; gap:10px; margin-top:0.5rem;\"><img src=\"view_image.jpg\" style=\"width:48%; border-radius:4px;\"><img src=\"after_view_image.png\" style=\"width:48%; border-radius:4px;\"></div>"
       },
       {
         id: "drone",
@@ -1718,31 +1697,31 @@
         date: "02/07/2024",
         tags: ["Kivy", "Python", "Plan 3D", "Chef de projet"],
         skills: ["Gestion de projet", "Electronique", "Domaines", "Python"],
-        desc: "Deux roles sur ce projet : chef de projet et developpeur. Coordination de l'équipe de la conception a la présentation finale. Realisation du plan 3D general de la structure et développement de l'application de controle en Kivy. Interface embarquee pilotant les capteurs et outils a bord, hors motorisation."
+        desc: "Deux rôles sur ce projet : chef de projet et développeur. Coordination de l'équipe de la conception à la présentation finale. Réalisation du plan 3D général de la structure et développement de l'application de contrôle en Kivy. Interface embarquée pilotant les capteurs et outils à bord, hors motorisation."
       },
       {
         id: "iot",
-        title: "Maison Connectee IoT",
+        title: "Maison Connectée IoT",
         date: "05/06/2024",
         tags: ["IoT", "Node-RED", "Raspberry Pi", "Arduino"],
         skills: ["IoT", "Node-RED", "Domaines", "Outils"],
-        desc: "Projet de grand oral de bac : système domotique reliant capteurs d'humidite et de temperature a un Raspberry Pi et un Arduino, orchestres via Node-RED. Visualisation des flux en temps reel et présentation devant jury."
+        desc: "Projet de grand oral de bac : système domotique reliant capteurs d'humidité et de température à un Raspberry Pi et un Arduino, orchestrés via Node-RED. Visualisation des flux en temps réel et présentation devant jury."
       },
       {
-        id: "secu",
-        title: "Recherche en Sécurité Web",
-        date: "05/08/2024",
-        tags: ["HackerOne", "Bug bounty", "XSS", "IDOR"],
-        skills: ["Cybersécurité", "Domaines"],
-        desc: "Apprentissage des méthodologies de bug bounty sur HackerOne : programmes publics et un programme privé dans le secteur des cryptomonnaies. Analyse de rapports existants, compréhension des vulnérabilités courantes (XSS, IDOR, injections) et familiarisation avec les processus de disclosure responsable."
+        id: "duxtool",
+        title: "Outil d'Administration et Sécurité Réseau (DuxTool)",
+        date: "Projet personnel",
+        tags: ["Python", "Scapy", "Réseau", "ARP/DNS Spoofing"],
+        skills: ["Cybersécurité", "Systèmes", "Réseaux", "Python", "Domaines"],
+        desc: "Développement d'un outil d'administration et d'analyse réseau en Python. Utilisation de Scapy et NetfilterQueue pour l'inspection de paquets, le filtrage et la manipulation de trames (ARP poisoning, DNS spoofing). Ce projet démontre ma capacité à interagir avec les couches basses du réseau et à comprendre les protocoles pour mieux sécuriser les infrastructures communicantes.<br><br><b>Extrait du code (Gestion asynchrone de l'empoisonnement ARP) :</b><br><pre style=\"background:#1e1e1e; color:#d4d4d4; padding:1rem; border-radius:4px; overflow-x:auto; font-size:0.85rem; margin-top:0.5rem; font-family:monospace;\"><code>class ArpSpoofingThread(threading.Thread):\n    def __init__(self, target_ip, gateway_ip):\n        super().__init__()\n        self.target_ip = target_ip\n        self.gateway_ip = gateway_ip\n        self.stop_event = threading.Event()\n\n    def run(self):\n        try:\n            while not self.stop_event.is_set():\n                arp_poisonning.arp_spoof(self.target_ip, self.gateway_ip)\n                arp_poisonning.arp_spoof(self.gateway_ip, self.target_ip)\n                time.sleep(2)\n        except:\n            print(\"ARP poisoning stopped working.\")</code></pre>"
       },
       {
         id: "tetris",
         title: "Tetris en Python",
         date: "SAE",
         tags: ["Python", "EiffelTk", "SAE"],
-        skills: ["Python", "Langages"],
-        desc: "SAE : implémentation complete du jeu en Python avec EiffelTk. Gestion des collisions, rotation des pièces, niveaux de difficulté et système de score."
+        skills: ["Python", "Langages", "Conception logicielle"],
+        desc: "SAE : implémentation complète du jeu en Python avec EiffelTk. Gestion des collisions, rotation matricielle des pièces, niveaux de difficulté et système de score avancé avec modificateurs dynamiques.<br><br><b>Extrait du code (Logique de rotation matricielle) :</b><br><pre style=\"background:#1e1e1e; color:#d4d4d4; padding:1rem; border-radius:4px; overflow-x:auto; font-size:0.85rem; margin-top:0.5rem; font-family:monospace;\"><code>def rotation_droite(jeu):\n    hauteur = len(jeu['grid'])\n    largeur = len(jeu['grid'][0])\n    nouvelle_grille = [[None for _ in range(hauteur)] for _ in range(largeur)]\n\n    for y in range(hauteur):\n        for x in range(largeur):\n            if jeu['grid'][y][x] is not None:\n                nouvelle_grille[largeur - 1 - x][y] = jeu['grid'][y][x]\n\n    jeu['grid'] = nouvelle_grille</code></pre>"
       },
       {
         id: "yams",
@@ -1756,9 +1735,9 @@
         id: "train",
         title: "Site de Réservation de Billets de Train",
         date: "Projet personnel",
-        tags: ["React", "JavaScript", "PHP", "SQL", "Full-Stack"],
-        skills: ["JavaScript", "PHP", "SQL", "Full-Stack", "Bases de données", "Langages"],
-        desc: "Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires, gestion du panier et historique des réservations. Front-end en React, back-end PHP avec base SQL relationnelle, déployé en production sur alwaysdata.",
+        tags: ["React", "JavaScript", "Node.js", "Full-Stack"],
+        skills: ["JavaScript", "Full-Stack", "Langages"],
+        desc: "Application web full-stack de réservation de billets de train : recherche de trajets, sélection des horaires et gestion du panier. Front-end en React, back-end Node.js.<br><br><b>Preuve d'architecture (Structure Full-Stack React/Node) :</b><br><img src=\"Capture d'écran 2026-03-26 211531.png\" style=\"max-width:100%; border:1px solid var(--border); border-radius:4px; margin-top:0.5rem;\">",
         link: "https://chufeng12.alwaysdata.net/"
       },
       {
@@ -1784,6 +1763,44 @@
     const btnNext = document.getElementById('modal-next');
     let currentProjects = [],
       currentIndex = 0;
+    
+    // ── OUVIR UN SEUL PROJET DEPUIS LES CARTES ──
+    function openProjectDetails(projectId) {
+      const p = PROJECTS.find(proj => proj.id === projectId);
+      if (!p) return;
+
+      // Met à jour les textes du header de la modale
+      document.getElementById('modal-skill-label').textContent = window.currentLang === 'en' ? 'Project Details' : 'Détails du projet';
+      document.getElementById('modal-title').textContent = p.title;
+      document.getElementById('modal-counter').textContent = '';
+      
+      // Cache la barre de navigation (Précédent/Suivant) car il n'y a qu'un projet
+      document.getElementById('modal-nav').style.display = 'none';
+      document.getElementById('modal-empty').style.display = 'none';
+
+      // Nettoie la modale
+      const modalBody = document.getElementById('modal-body');
+      modalBody.querySelectorAll('.modal-project').forEach(el => el.remove());
+
+      // Construit le contenu du projet (avec la propriété desc qui contient tes images et ton code)
+      const div = document.createElement('div');
+      div.className = 'modal-project active';
+      div.innerHTML =
+        '<div class="modal-project-date">' + p.date + '</div>' +
+        '<div class="modal-project-desc">' + p.desc + '</div>' +
+        '<div class="modal-tags">' + p.tags.map(function(t) {
+          return '<span class="modal-tag">' + t + '</span>';
+        }).join('') + '</div>';
+
+      // Injecte dans la modale
+      modalBody.insertBefore(div, document.getElementById('modal-empty'));
+      
+      // Affiche la modale
+      const overlay = document.getElementById('modal-overlay');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
 
     function openModal(skillKey, skillLabel) {
       currentProjects = PROJECTS.filter(p => p.skills.some(s => s.toLowerCase() === skillKey.toLowerCase()));
